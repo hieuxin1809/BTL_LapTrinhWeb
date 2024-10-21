@@ -51,9 +51,9 @@ public partial class Hshop2023Context : DbContext
 
     public virtual DbSet<YeuThich> YeuThiches { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=NGUYENHIEU\\SQLEXPRESS;Initial Catalog=Hshop2023;Integrated Security=True;Trust Server Certificate=True");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-OASET92;Initial Catalog=Hshop2023;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -93,10 +93,6 @@ public partial class Hshop2023Context : DbContext
             entity.Property(e => e.MaHd).HasColumnName("MaHD");
             entity.Property(e => e.MaHh).HasColumnName("MaHH");
             entity.Property(e => e.SoLuong).HasDefaultValue(1);
-
-            entity.HasOne(d => d.MaHdNavigation).WithMany(p => p.ChiTietHds)
-                .HasForeignKey(d => d.MaHd)
-                .HasConstraintName("FK_OrderDetails_Orders");
 
             entity.HasOne(d => d.MaHhNavigation).WithMany(p => p.ChiTietHds)
                 .HasForeignKey(d => d.MaHh)
@@ -210,6 +206,7 @@ public partial class Hshop2023Context : DbContext
             entity.Property(e => e.NgayGiao)
                 .HasDefaultValueSql("(((1)/(1))/(1900))")
                 .HasColumnType("datetime");
+            entity.Property(e => e.SoDienThoai).HasMaxLength(24);
 
             entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.HoaDons)
                 .HasForeignKey(d => d.MaKh)
