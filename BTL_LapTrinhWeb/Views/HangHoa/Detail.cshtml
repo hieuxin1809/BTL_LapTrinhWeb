@@ -170,7 +170,7 @@
                 <div class="row g-4 fruite">
                     <div class="col-lg-12">
                         @await Html.PartialAsync("_TimKiemPanel")
-                        @await Component.InvokeAsync("MenuLoai")
+                        @await Component.InvokeAsync("MenuLoai", new {isDefaultView = true})
                     </div>
                     <div class="col-lg-12">
                         <h4 class="mb-4">Featured products</h4>

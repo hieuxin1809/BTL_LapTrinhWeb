@@ -29,6 +29,8 @@
 
     <!-- Template Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
     @RenderSection("Styles" , required: false) 
 </head>
 <body>
@@ -56,13 +58,13 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Home</a>
                             <a asp-controller= "HangHoa" asp-action= "Index" class="nav-item nav-link">Shop</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Checkout</a>
+                                    <a asp-controller="Cart" asp-action="Index" class="dropdown-item">Cart</a>
+                                    <a asp-controller="Cart" asp-action="Checkout" class="dropdown-item">Checkout</a>
                                     <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                                     <a href="404.html" class="dropdown-item">404 Page</a>
                                 </div>  
@@ -101,7 +103,7 @@
             </div>
         </div>
         <!-- Modal Search End -->
-        <div style="min-height:400px;" class="hero-header">
+        <div style="min-height:400px; margin-top:60px">
             @RenderBody()
         </div>
 
@@ -123,6 +125,7 @@
     <script src="~/lib/waypoints/waypoints.min.js"></script>
     <script src="~/lib/lightbox/js/lightbox.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/js/site.js"></script>
 
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
