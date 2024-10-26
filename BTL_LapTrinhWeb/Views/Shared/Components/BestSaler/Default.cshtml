@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<BTL_LapTrinhWeb.ViewModels.BestSalerVM>
 
-<div class="row g-4">
-    @foreach (var item in Model)
-    {
-        <div class="col-6 col-xl-3">
-            <div class="rounded position-relative fruite-item">
-                <div class="fruite-img">
+<div class="vesitable">
+    <div class="owl-carousel vegetable-carousel justify-content-center">
+        @foreach (var item in Model)
+        {
+            <div class="border border-primary rounded position-relative vesitable-item">
+                <div class="vesitable-img">
                     <a asp-action="Detail" asp-controller="HangHoa" asp-route-id="@item.Mahh">
                         <img src="~/Hinh/HangHoa/@item.Hinh" class="img-fluid w-100 rounded-top" alt="@item.Tenhh">
                     </a>
@@ -22,6 +22,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>

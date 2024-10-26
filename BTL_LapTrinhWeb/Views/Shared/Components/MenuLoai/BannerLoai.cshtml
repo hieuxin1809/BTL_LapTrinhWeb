@@ -1,16 +1,14 @@
 ﻿@model IEnumerable<BTL_LapTrinhWeb.ViewModels.MenuLoaiVM>
-<div class="container-fluid py-5">
-    <div class="row g-4">
-        @foreach(var item in Model)
+<div class="vesitable">
+    <div class="owl-carousel vegetable-carousel justify-content-center">
+        @foreach (var item in Model)
         {
-            <div class="col-6 col-md-3 ">
-                <div class="product-card text-center">
-                    <div class="py-4 content">
-                        <h5 style="color:white;">@item.TenLoai</h5>
-                        <a asp-controller="HangHoa" asp-action="Index" asp-route-loai="@item.MaLoai" class="btn border border-secondary rounded-pill px-3 text-primary">
-                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Xem ngay
-                        </a>
-                    </div>
+            <div class="product-card text-center">
+                <div class="py-4 content">
+                    <h5 style="color:white;">@item.TenLoai</h5>
+                    <a asp-controller="HangHoa" asp-action="Index" asp-route-loai="@item.MaLoai" class="btn border border-secondary rounded-pill px-3 text-primary">
+                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Xem ngay
+                    </a>
                 </div>
             </div>
         }

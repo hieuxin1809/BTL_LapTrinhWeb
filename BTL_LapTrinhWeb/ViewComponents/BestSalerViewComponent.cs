@@ -21,7 +21,7 @@ namespace BTL_LapTrinhWeb.ViewComponents
                 DonGia = lo.DonGia,
                 MoTaNgan = lo.MoTaDonVi,
                 SoLanXem = lo.SoLanXem
-            }).OrderByDescending(x => x.SoLanXem).Take(4).ToListAsync();
+            }).OrderByDescending(x => x.SoLanXem).Take(10).ToListAsync();
             return View(data);
         }
     }

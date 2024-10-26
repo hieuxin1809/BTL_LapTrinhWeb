@@ -11,8 +11,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="position-relative mx-auto">
-                        <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Your Email">
-                        <button type="submit" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
+                        <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Nhập email để nhận thông tin khuyến mãi">
+                        <button type="submit" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Đăng ký ngay</button>
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -38,33 +38,28 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="d-flex flex-column text-start footer-item">
-                    <h4 class="text-light mb-3">Shop Info</h4>
-                    <a class="btn-link" href="">About Us</a>
-                    <a class="btn-link" href="">Contact Us</a>
-                    <a class="btn-link" href="">Privacy Policy</a>
-                    <a class="btn-link" href="">Terms & Condition</a>
-                    <a class="btn-link" href="">Return Policy</a>
-                    <a class="btn-link" href="">FAQs & Help</a>
+                    <h4 class="text-light mb-3">Tin tức</h4>
+                    <a class="btn-link" asp-for="Branch" asp-controller="News">Chi nhánh</a>
+                    <a class="btn-link" asp-for="Event" asp-controller="News">Sự kiện</a>
+                    <a class="btn-link" asp-for="Cooperate" asp-controller="News">Hợp tác</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="d-flex flex-column text-start footer-item">
-                    <h4 class="text-light mb-3">Account</h4>
-                    <a class="btn-link" href="">My Account</a>
-                    <a class="btn-link" href="">Shop details</a>
-                    <a class="btn-link" href="">Shopping Cart</a>
-                    <a class="btn-link" href="">Wishlist</a>
-                    <a class="btn-link" href="">Order History</a>
-                    <a class="btn-link" href="">International Orders</a>
+                    <h4 class="text-light mb-3">Hỗ trợ</h4>
+                    <a class="btn-link" asp-for="Introduce" asp-controller="Introduce">Về chúng tôi</a>
+                    <a class="btn-link" asp-for="Contact" asp-controller="Contact">Liên hệ chúng tôi</a>
+                    <a class="btn-link" asp-for="DangNhap" asp-controller="KhachHang">Đăng nhập</a>
+                    <a class="btn-link" asp-for="DangKy" asp-controller="KhachHang">Đăng ký</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="footer-item">
-                    <h4 class="text-light mb-3">Contact</h4>
-                    <p>Address: 1429 Netus Rd, NY 48247</p>
-                    <p>Email: Example@gmail.com</p>
-                    <p>Phone: +0123 4567 8910</p>
-                    <p>Payment Accepted</p>
+                    <h4 class="text-light mb-3">Liên hệ</h4>
+                    <p>Địa chỉ: Số 3 đường Cầu Giấy, Hà Nội, Việt Nam</p>
+                    <p>Email: hoanghieu133@gmail.com</p>
+                    <p>Phone: +84876767151</p>
+                    <p>Chấp nhận thanh toán</p>
                     <img src="img/payment.png" class="img-fluid" alt="">
                 </div>
             </div>
