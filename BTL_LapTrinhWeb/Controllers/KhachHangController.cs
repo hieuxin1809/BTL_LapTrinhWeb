@@ -30,7 +30,7 @@ namespace BTL_LapTrinhWeb.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult DangKy(RegisterVM model, IFormFile Hinh)
+		public IActionResult DangKy(RegisterVM model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -42,10 +42,6 @@ namespace BTL_LapTrinhWeb.Controllers
 					khachHang.HieuLuc = true;//sẽ xử lý khi dùng Mail để active
 					khachHang.VaiTro = 0;
 
-					if (Hinh != null)
-					{
-						khachHang.Hinh = MyUtil.UploadHinh(Hinh, "KhachHang");
-					}
 
 					db.Add(khachHang);
 					db.SaveChanges();
@@ -56,15 +52,15 @@ namespace BTL_LapTrinhWeb.Controllers
 					var mess = $"{ex.Message} shh";
 				}
             }
-   //         else
-   //         {
-			//	var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-			//	foreach (var error in errors)
-			//	{
-			//		Console.WriteLine(error);
-			//	}
-			//}
-			return View();
+            else
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+            return View();
 		}
 		#endregion
 
@@ -131,8 +127,33 @@ namespace BTL_LapTrinhWeb.Controllers
         #endregion
 
         [Authorize]
+        [HttpGet]
         public IActionResult Profile()
         {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Profile(ProfileVM model, IFormFile Hinh)
+        {
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var khachHang = _mapper.Map<KhachHang>(model);
+                    if (Hinh != null)
+                    {
+                        khachHang.Hinh = MyUtil.UploadHinh(Hinh, "KhachHang");
+                    }
+
+                    db.Add(khachHang);
+                    db.SaveChanges();
+                    return RedirectToAction("Profile", "KhachHang");
+                }
+                catch (Exception ex) 
+                {
+                    var message = $"Lỗi: {ex.Message}";
+                }
+            }
             return View();
         }
 

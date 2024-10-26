@@ -116,4 +116,35 @@ body {
         margin-left: 10px;
     }
 
-/*Carousel*/ 
+/*Login*/
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+
+.h-custom {
+    height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
+}
+
+.half-width-container {
+    width: 50%;
+    border: 2px solid #007bff; /* Thêm viền màu xanh */
+    border-radius: 8px; /* Tùy chọn: bo tròn các góc */
+    padding: 20px; /* Thêm khoảng cách bên trong */
+    background-color: #fff; /* Tùy chọn: nền trắng cho container */
+}
+
+@media (min-width: 992px) {
+    .login_form {
+        height: 50vh;
+    }
+}

@@ -1,7 +1,8 @@
-using BTL_LapTrinhWeb.Data;
+﻿using BTL_LapTrinhWeb.Data;
 using BTL_LapTrinhWeb.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = "/KhachHang/DangNhap";
     options.AccessDeniedPath = "/AccessDenied";
 });
+
+//add Mailkit
+// Đăng ký MailKit và SmtpSettings từ appsettings.json
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+builder.Services.AddTransient<EmailService>();
 
 var app = builder.Build();
 
