@@ -15,7 +15,7 @@
             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@item.TenLoai</div>
             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                 <a asp-action="Detail" asp-controller="HangHoa" asp-route-id="@item.Mahh">
-                <h4>@item.Tenhh</h4>
+                <h4 class="text-truncate">@item.Tenhh</h4>
                 </a>
                 <p>@item.MoTaNgan</p>
                 <div class="d-flex justify-content-between flex-lg-wrap">

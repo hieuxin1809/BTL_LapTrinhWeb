@@ -2,7 +2,155 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Hero Start -->
+<div class="container-fluid pt-5 mb-5">
+    <div class="container py-2">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active rounded">
+                            <img src="img/hero-img-1.png" class="img-fluid w-100 h-60 bg-secondary rounded" alt="Slide đầu tiên">
+                        </div>
+                        <div class="carousel-item rounded">
+                            <img src="img/hero-img-2.jpg" class="img-fluid w-100 h-60 rounded" alt="Slide thứ hai">
+                        </div>
+                        <div class="carousel-item rounded">
+                            <img src="img/hero-img-1.png" class="img-fluid w-100 h-60 rounded" alt="Slide thứ ba">
+                        </div>
+                        <div class="carousel-item rounded">
+                            <img src="img/hero-img-2.jpg" class="img-fluid w-100 h-60 rounded" alt="Slide thứ tư">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container-fluid py-5">
+            <div class="row g-4">
+                <div class="col-6 col-md-3 ">
+                    <div class="product-card text-center">
+                        <div class="py-4 content">
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Go to
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 ">
+                    <div class="product-card text-center">
+                        <div class="py-4 content">
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Go to
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 ">
+                    <div class="product-card text-center">
+                        <div class="py-4 content">
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Go to
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 ">
+                    <div class="product-card text-center">
+                        <div class="py-4 content">
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Go to
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- Hero End -->
+<!-- Hero secsion start-->
+<div class="container-fluid py-5">
+    <div class="container">
+        <h2 class="section-title">DANH MỤC SẢN PHẨM</h2>
+        @await Component.InvokeAsync("MenuLoai", new { isDefaultView = false })
+    </div>
+</div>
+
+<!-- Hotline Section -->
+<div class="container-fluid py-5">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 style="color:white;">Hotline</h1>
+            <p class="hotline-number">0589839851</p>
+            <p class="sub-text">Chúng tôi cam kết 100% các sản phẩm có nguồn gốc xuất xứ rõ ràng, sạch, an toàn và đảm bảo chất lượng ngon nhất!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Sản Phẩm Bán Chạy Section -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <h2 class="section-title">SẢN PHẨM BÁN CHẠY</h2>
+        @await Component.InvokeAsync("BestSaler");
+    </div>
+</div>
+
+<!-- Hero secsion end-->
+<!-- Featurs Section Start -->
+<div class="container-fluid featurs py-2">
+    <div class="container">
+        <h2 class="section-title">VỀ CHÚNG TÔI</h2>
+        <div class="vesitable">
+            <div class="owl-carousel vegetable-carousel justify-content-center">
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="featurs-item text-center rounded bg-light p-4">
+                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                            <i class="fas fa-car-side fa-3x text-white"></i>
+                        </div>
+                        <div class="featurs-content text-center">
+                            <h5>Miễn phí giao hàng</h5>
+                            <p class="mb-0">Miễn phí đổi trả với những đơn hàng trên 1.000.000.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="featurs-item text-center rounded bg-light p-4">
+                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                            <i class="fas fa-user-shield fa-3x text-white"></i>
+                        </div>
+                        <div class="featurs-content text-center">
+                            <h5>Bảo mật thanh toán</h5>
+                            <p class="mb-0">100% bảo mật</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="featurs-item text-center rounded bg-light p-4">
+                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                            <i class="fas fa-exchange-alt fa-3x text-white"></i>
+                        </div>
+                        <div class="featurs-content text-center">
+                            <h5>Đổi trả trong 7 ngày</h5>
+                            <p class="mb-0">Bảo đảm hoàn trả 100% tiền nếu đổi trả trong 7 ngày</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="featurs-item text-center rounded bg-light p-4">
+                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                            <i class="fa fa-phone-alt fa-3x text-white"></i>
+                        </div>
+                        <div class="featurs-content text-center">
+                            <h5>Hỗ trợ 24/7</h5>
+                            <p class="mb-0">Hỗ trợ nhanh mọi lúc</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Featurs Section End -->

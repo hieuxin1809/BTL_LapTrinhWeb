@@ -1,36 +1,73 @@
 ﻿@model BTL_LapTrinhWeb.ViewModels.LoginVM
 @{
     ViewData["Title"] = "DangNhap";
+    Layout = "_LayoutLoginRegister";
 }
 
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <h1 class="mb-4">Đăng nhập</h1>
-
-        <form asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnURL">
-            <div class="text-danger" asp-validation-summary="All"></div>
-            <div class="row">
-                <div class="row">
-                    <div class="col-md-12 col-lg-6">
-                        <div class="form-item w-100">
-                            <label asp-for="@Model.UserName" class="form-label my-3"></label><sup>*</sup>
-                            <input asp-for="@Model.UserName" type="text" class="form-control">
-                            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-lg-6">
-                        <div class="form-item w-100">
-                            <label asp-for="@Model.Password" class="form-label my-3"></label><sup>*</sup>
-                            <input asp-for="@Model.Password"class="form-control">
-                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                    <button type="submit" class="btn border-secondary py-3 px-4 w-100 text-primary">Đăng nhập</button>
-                    <a asp-controller="KhachHang" asp-action="QuenMatKhau" class="btn border-danger">Quên mật khẩu</a>
-                </div>
+<section class="vh-100 d-flex align-items-center justify-content-center login_form">
+    <div class="container-fluid ">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                     class="img-fluid" alt="Sample image">
             </div>
-        </form>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnURL">
+                    <!-- Email input -->
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                        <input asp-for="@Model.UserName" id="form3Example3" class="form-control form-control-md"
+                               placeholder="Nhập Email" />
+                        <label asp-for="@Model.UserName" class="form-label" for="form3Example3"></label>
+                    </div>
+
+                    <!-- Password input -->
+                    <div data-mdb-input-init class="form-outline mb-3">
+                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                        <input asp-for="@Model.Password" id="form3Example4" class="form-control form-control-md"
+                               placeholder="Nhập mật khẩu" />
+                        <label asp-for="@Model.Password" class="form-label" for="form3Example4"></label>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Checkbox -->
+                        <div class="form-check mb-0">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                            <label class="form-check-label" for="form2Example3">
+                                Ghi nhớ
+                            </label>
+                        </div>
+                        <a asp-controller="KhachHang" asp-action="QuenMatKhau" class="text-body">Quên mật khẩu?</a>
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                            Đăng nhập
+                        </button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">
+                            Chưa có tài khoản? <a asp-controller="KhachHang" asp-action="DangKy" class="link-danger">Đăng ký</a>
+                        </p>
+                    </div>
+
+                    <div class="divider d-flex align-items-center my-4">
+                        <p class="text-center fw-bold mx-3 mb-0 divider">Or</p>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                        <p class="lead fw-normal mb-0 me-3">Sign in with</p>
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-floating mx-1">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-floating mx-1">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-floating mx-1">
+                            <i class="fab fa-linkedin-in"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-</div>
+</section>
