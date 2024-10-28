@@ -12,33 +12,26 @@ namespace BTL_LapTrinhWeb.Controllers
         {
             db = context;
         }
-        //public IActionResult Index(int? loai)
-        //{
-        //    var hangHoas = db.HangHoas.AsQueryable();
-        //    if (loai.HasValue)
-        //    {
-        //        hangHoas = hangHoas.Where(p=>p.MaLoai == loai.Value);
-        //    }
-        //    var result = hangHoas.Select(p => new HangHoaVM
-        //    {
-        //        Mahh = p.MaHh,
-        //        Tenhh = p.TenHh,
-        //        DonGia = p.DonGia ?? 0,
-        //        Hinh = p.Hinh ?? "",
-        //        MoTaNgan = p.MoTaDonVi ?? "",
-        //        TenLoai = p.MaLoaiNavigation.TenLoai
-        //    }); 
-        //    ViewBag.Loai = loai;
-        //    return View(result);
-        //}
-        public IActionResult Index(int? loai, int page = 1, int pageSize = 9)
+        public IActionResult Index(int? loai, string sortOrder, int page = 1, int pageSize = 9)
         {
             var hangHoas = db.HangHoas.AsQueryable();
-
             // Lọc theo loại nếu có
             if (loai.HasValue)
             {
                 hangHoas = hangHoas.Where(p => p.MaLoai == loai.Value);
+            }
+
+            // Sắp xếp theo giá nếu có yêu cầu
+            switch (sortOrder)
+            {
+                case "price_asc":
+                    hangHoas = hangHoas.OrderBy(p => p.DonGia);
+                    break;
+                case "price_desc":
+                    hangHoas = hangHoas.OrderByDescending(p => p.DonGia);
+                    break;
+                default:
+                    break;
             }
 
             // Tổng số mục
@@ -53,40 +46,23 @@ namespace BTL_LapTrinhWeb.Controllers
                     DonGia = p.DonGia ?? 0,
                     Hinh = p.Hinh ?? "",
                     MoTaNgan = p.MoTaDonVi ?? "",
-                    TenLoai = p.MaLoaiNavigation.TenLoai
+                    TenLoai = p.MaLoaiNavigation.TenLoai,
+                    Rating = p.Rating ?? 0
                 })
-                .Skip((page - 1) * pageSize) // Bỏ qua các mục của trang trước
-                .Take(pageSize)              // Lấy số mục của trang hiện tại
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToList();
 
             // Tổng số trang
             int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
 
-            // ViewBag để truyền thông tin phân trang sang view
+            // Truyền thông tin phân trang và sắp xếp sang view
             ViewBag.Loai = loai;
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
             ViewBag.PageSize = pageSize;
+            ViewBag.SortOrder = sortOrder; // Giữ lại thứ tự sắp xếp hiện tại
 
-            return View(result);
-        }
-
-        public IActionResult Search(string? query)
-        {
-            var hangHoas = db.HangHoas.AsQueryable();
-            if (query != null)
-            {
-                hangHoas = hangHoas.Where(p => p.TenHh.Contains(query));
-            }
-            var result = hangHoas.Select(p => new HangHoaVM
-            {
-                Mahh = p.MaHh,
-                Tenhh = p.TenHh,
-                DonGia = p.DonGia ?? 0,
-                Hinh = p.Hinh ?? "",
-                MoTaNgan = p.MoTaDonVi ?? "",
-                TenLoai = p.MaLoaiNavigation.TenLoai
-            });
             return View(result);
         }
         public IActionResult Detail(int id)
@@ -104,12 +80,85 @@ namespace BTL_LapTrinhWeb.Controllers
                 DonGia = data.DonGia ?? 0,
                 ChiTiet = data.MoTa ?? string.Empty,
                 Hinh = data.Hinh ?? string.Empty,
+                Rating = data.Rating ?? 0,
                 MoTaNgan = data.MoTaDonVi ?? string.Empty,
                 TenLoai = data.MaLoaiNavigation.TenLoai,
-                SoLuongTon = 10,
-                DiemDanhGia = 5
+                SoLuongTon = 10
             };
             return View(result);
+        }
+
+        public IActionResult Search(string? query)
+        {
+            var hangHoas = db.HangHoas.AsQueryable();
+            if (query != null)
+            {
+                hangHoas = hangHoas.Where(p => p.TenHh.Contains(query));
+            }
+            var result = hangHoas.Select(p => new HangHoaVM
+            {
+                Mahh = p.MaHh,
+                Tenhh = p.TenHh,
+                DonGia = p.DonGia ?? 0,
+                Hinh = p.Hinh ?? "",
+                MoTaNgan = p.MoTaDonVi ?? "",
+                TenLoai = p.MaLoaiNavigation.TenLoai,
+                Rating = (int)p.Rating
+            });
+            return View(result);
+        }
+        public IActionResult SortProducts(int? loai, string sortOrder, int page = 1, int pageSize = 9)
+        {
+            var hangHoas = db.HangHoas.AsQueryable();
+
+            // Lọc theo loại nếu có
+            if (loai.HasValue)
+            {
+                hangHoas = hangHoas.Where(p => p.MaLoai == loai.Value);
+            }
+
+            // Sắp xếp theo giá
+            switch (sortOrder)
+            {
+                case "price_asc":
+                    hangHoas = hangHoas.OrderBy(p => p.DonGia);
+                    break;
+                case "price_desc":
+                    hangHoas = hangHoas.OrderByDescending(p => p.DonGia);
+                    break;
+                default:
+                    break;
+            }
+
+            // Tổng số sản phẩm
+            int totalItems = hangHoas.Count();
+
+            // Lấy danh sách sản phẩm sau khi phân trang
+            var result = hangHoas
+                .Select(p => new HangHoaVM
+                {
+                    Mahh = p.MaHh,
+                    Tenhh = p.TenHh,
+                    DonGia = p.DonGia ?? 0,
+                    Hinh = p.Hinh ?? "",
+                    MoTaNgan = p.MoTaDonVi ?? "",
+                    TenLoai = p.MaLoaiNavigation.TenLoai,
+                    Rating = p.Rating ?? 0
+                })
+                .Skip((page - 1) * pageSize)  // Bỏ qua các sản phẩm trước đó
+                .Take(pageSize)  // Lấy số lượng sản phẩm theo kích thước trang
+                .ToList();
+
+            // Tổng số trang
+            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            // Truyền dữ liệu phân trang và sắp xếp về view
+            ViewBag.Loai = loai;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.SortOrder = sortOrder; // Lưu thứ tự sắp xếp hiện tại
+
+            return PartialView("SortProducts", result);
         }
     }
 }

@@ -8,6 +8,7 @@
         public double DonGia { get; set; }
         public string MoTaNgan { get; set; }
         public string TenLoai { get; set; }
+        public int Rating { get; set; }
     }
     public class ChiTietHangHoaVM
     {
@@ -20,5 +21,6 @@
         public string ChiTiet { get; set; }
         public int DiemDanhGia { get; set; }
         public int SoLuongTon { get; set; }
+        public int Rating { get; set; }
     }
 }

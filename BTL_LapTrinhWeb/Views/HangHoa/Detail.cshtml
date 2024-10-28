@@ -21,7 +21,7 @@
                     <div class="col-lg-6">
                         <div class="border rounded">
                             <a href="#">
-                                <img src="~/Hinh/HangHoa/@Model.Hinh" class="img-fluid rounded" alt="@Model.Tenhh">
+                                <img src="~/LayoutCustomer/Hinh/HangHoa/@Model.Hinh" class="img-fluid rounded" alt="@Model.Tenhh">
                             </a>
                         </div>
                     </div>
@@ -30,11 +30,14 @@
                         <p class="mb-3">Category: @Model.TenLoai</p>
                         <h5 class="fw-bold mb-3">@Model.DonGia $</h5>
                         <div class="d-flex mb-4">
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star"></i>
+                            @for (int z = 0; z < @Model.Rating; z++)
+                            {
+                                <i class="fa fa-star text-secondary"></i>
+                            }
+                            @for (int z = 0; z < 5 - @Model.Rating; z++)
+                            {
+                                <i class="fa fa-star"></i>
+                            }
                         </div>
                         <p class="mb-4">@Model.MoTaNgan</p>
                         <form asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.Mahh">

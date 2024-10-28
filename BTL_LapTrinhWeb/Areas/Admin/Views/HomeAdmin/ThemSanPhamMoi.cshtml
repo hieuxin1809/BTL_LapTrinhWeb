@@ -1,0 +1,80 @@
+﻿@addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
+@model BTL_LapTrinhWeb.ViewModels.HangHoaAnnotation
+
+@{
+    ViewData["Title"] = "ThemSanPhamMoi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>ThemSanPhamMoi</h1>
+
+<h4>HangHoa</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="ThemSanPhamMoi">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>           
+            <div class="form-group">
+                <label asp-for="@Model.TenHh" class="control-label"></label>
+                <input asp-for="@Model.TenHh" class="form-control" />
+                <span asp-validation-for="@Model.TenHh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.TenAlias" class="control-label"></label>
+                <input asp-for="@Model.TenAlias" class="form-control" />
+                <span asp-validation-for="@Model.TenAlias" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.MaLoai" class="control-label"></label>
+                <select asp-for="@Model.MaLoai" class="form-control" asp-items="ViewBag.MaLoai"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.DonGia" class="control-label"></label>
+                <input asp-for="@Model.DonGia" class="form-control" />
+                <span asp-validation-for="@Model.DonGia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.MoTaDonVi" class="control-label"></label>
+                <input asp-for="@Model.MoTaDonVi" class="form-control" />
+                <span asp-validation-for="@Model.MoTaDonVi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Hinh" class="control-label"></label>
+                <input asp-for="@Model.Hinh" class="form-control" />
+                <span asp-validation-for="@Model.Hinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.NgaySx" class="control-label"></label>
+                <input asp-for="@Model.NgaySx" class="form-control" />
+                <span asp-validation-for="@Model.NgaySx" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.GiamGia" class="control-label"></label>
+                <input asp-for="@Model.GiamGia" class="form-control" />
+                <span asp-validation-for="@Model.GiamGia" class="text-danger"></span>
+            </div>           
+            <div class="form-group">
+                <label asp-for="@Model.SoLanXem" class="control-label"></label>
+                <input asp-for="@Model.SoLanXem" class="form-control" />
+                <span asp-validation-for="@Model.SoLanXem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.MoTa" class="control-label"></label>
+                <input asp-for="@Model.MoTa" class="form-control" />
+                <span asp-validation-for="@Model.MoTa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.MaNcc" class="control-label"></label>
+                <select asp-for="@Model.MaNcc" class="form-control" asp-items="ViewBag.MaNcc"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
