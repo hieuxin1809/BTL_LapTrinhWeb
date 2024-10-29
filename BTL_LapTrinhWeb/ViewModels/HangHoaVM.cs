@@ -21,4 +21,5 @@
         public int DiemDanhGia { get; set; }
         public int SoLuongTon { get; set; }
     }
+
 }

@@ -1,0 +1,48 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model IPagedList<BTL_LapTrinhWeb.Data.DanhGia>
+
+@foreach (var comment in Model){
+    <div class="d-flex mb-4">
+        <div>
+            <p class="mb-2" style="font-size: 14px;">@comment.Date?.ToString("MMMM dd, yyyy")</p>
+            <div class="d-flex justify-content-between">
+                <h5>@comment.MaKh</h5>
+                <div class="d-flex mb-3">
+                    <div class="d-flex mb-2">
+                        @if (comment.Rating != 0)
+                        {
+                            @for (int i = 0; i < comment.Rating; i++)
+                            {
+                                <i class="fa fa-star text-secondary"></i>
+                            }
+
+                            @for (int i = 0; i < 0 - comment.Rating; i++)
+                            {
+                                <i class="fa fa-star"></i>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <p>@comment.BinhLuan</p>
+        </div>
+    </div>
+}
+
+<div class="col-12">
+    <div class="pagination d-flex justify-content-center mt-5">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            if (i == ViewBag.CurrentPage)
+            {
+                <a href="#" class="active rounded">@i</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Detail", new { id = Model.First().MaHh, pageNumber = i })" class="rounded">@i</a>
+            }
+        }
+    </div>
+</div>
+

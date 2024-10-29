@@ -1,7 +1,12 @@
 ﻿using BTL_LapTrinhWeb.Data;
+using BTL_LapTrinhWeb.Helpers;
 using BTL_LapTrinhWeb.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Drawing.Printing;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace BTL_LapTrinhWeb.Controllers
 {
@@ -68,8 +73,47 @@ namespace BTL_LapTrinhWeb.Controllers
             ViewBag.TotalPages = totalPages;
             ViewBag.PageSize = pageSize;
 
+
+
             return View(result);
         }
+<<<<<<< Updated upstream
+=======
+        public IActionResult Detail(int id, int pageNumber = 1, int pageSize = 5)
+        {
+            var data = db.HangHoas.Include(p => p.MaLoaiNavigation).SingleOrDefault(p => p.MaHh == id);
+            if (data == null)
+            {
+                TempData["Message"] = "khong tim thay ";
+                return RedirectToAction("/404");
+            }
+            var result = new ChiTietHangHoaVM
+            {
+                Mahh = data.MaHh,
+                Tenhh = data.TenHh,
+                DonGia = data.DonGia ?? 0,
+                ChiTiet = data.MoTa ?? string.Empty,
+                Hinh = data.Hinh ?? string.Empty,
+                Rating = data.Rating ?? 0,
+                MoTaNgan = data.MoTaDonVi ?? string.Empty,
+                TenLoai = data.MaLoaiNavigation.TenLoai,
+                SoLuongTon = 10
+            };
+
+            //Lay ra comments
+            var totalItems = db.DanhGia.Where(c => c.MaHh == id).ToList().Count;
+            var totalPages = (int)Math.Ceiling((double)(totalItems) / pageSize);
+            var comments = db.DanhGia
+                .Where(c => c.MaHh == id)
+                .OrderByDescending(c => c.Date)
+                .ToPagedList(pageNumber, pageSize); 
+
+            ViewData["Comments"] = comments;
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = totalPages;
+            return View(result);
+        }
+>>>>>>> Stashed changes
 
         public IActionResult Search(string? query)
         {
@@ -110,6 +154,32 @@ namespace BTL_LapTrinhWeb.Controllers
                 DiemDanhGia = 5
             };
             return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult PostComment(int MaHh, string BinhLuan, int Rating)
+        {
+            string maKh = User.FindFirst(MySetting.CLAIM_CUSTOMERID)?.Value;
+
+            // Kiểm tra nếu maKh không null
+            if (maKh != null)
+            {
+                var newComment = new DanhGia
+                {
+                    MaKh = maKh,
+                    MaHh = MaHh,
+                    BinhLuan = BinhLuan,
+                    Rating = Rating,
+                    Date = DateTime.Now
+
+                };
+                db.DanhGia.Add(newComment);
+                db.SaveChanges();
+            }
+
+
+            // Sau khi lưu, quay lại trang chi tiết sản phẩm
+            return RedirectToAction("Detail", new { id = MaHh });
         }
     }
 }

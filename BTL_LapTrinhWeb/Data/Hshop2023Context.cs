@@ -21,6 +21,8 @@ public partial class Hshop2023Context : DbContext
 
     public virtual DbSet<ChuDe> ChuDes { get; set; }
 
+    public virtual DbSet<DanhGia> DanhGia { get; set; }
+
     public virtual DbSet<GopY> Gopies { get; set; }
 
     public virtual DbSet<HangHoa> HangHoas { get; set; }
@@ -53,7 +55,11 @@ public partial class Hshop2023Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+<<<<<<< Updated upstream
         => optionsBuilder.UseSqlServer("Data Source=DESKTOP-OASET92;Initial Catalog=Hshop2023;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+=======
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-S1UPDHE\\SQLEXPRESS;Initial Catalog=HShop2023;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+>>>>>>> Stashed changes
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -118,6 +124,27 @@ public partial class Hshop2023Context : DbContext
                 .HasForeignKey(d => d.MaNv)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_ChuDe_NhanVien");
+        });
+
+        modelBuilder.Entity<DanhGia>(entity =>
+        {
+            entity.HasKey(e => e.Stt).HasName("PK__DanhGia__CA1EB6903B89E45C");
+
+            entity.Property(e => e.Stt).HasColumnName("STT");
+            entity.Property(e => e.BinhLuan).HasMaxLength(500);
+            entity.Property(e => e.Date)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Email).HasMaxLength(255);
+            entity.Property(e => e.MaHh).HasColumnName("MaHH");
+            entity.Property(e => e.MaKh)
+                .HasMaxLength(100)
+                .HasColumnName("MaKH");
+
+            entity.HasOne(d => d.MaHhNavigation).WithMany(p => p.DanhGia)
+                .HasForeignKey(d => d.MaHh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Product_Review");
         });
 
         modelBuilder.Entity<GopY>(entity =>
