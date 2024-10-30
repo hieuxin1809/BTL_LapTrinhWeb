@@ -1,5 +1,6 @@
 ﻿using BTL_LapTrinhWeb.Data;
 using BTL_LapTrinhWeb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -9,6 +10,7 @@ namespace BTL_LapTrinhWeb.Areas.Admin.Controllers
     [Area("admin")]
     [Route("admin")]
     [Route("admin/order")]
+    [Authorize(Roles = "Admin")]
     public class OrderController : Controller
     {
         private readonly Hshop2023Context db;

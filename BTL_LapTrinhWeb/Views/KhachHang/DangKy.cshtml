@@ -4,7 +4,7 @@
     Layout = "_LayoutLoginRegister";
 }
 
-<section class="vh-100 d-flex align-items-center justify-content-center login_form">
+@* <section class="vh-100 d-flex align-items-center justify-content-center login_form">
     <div class="container-fluid ">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-9 col-lg-6 col-xl-5">
@@ -28,13 +28,16 @@
                                placeholder="Nhập mật khẩu" />
                         <label asp-for="@Model.MatKhau" class="form-label" for="form3Example4"></label>
                     </div>
+
+                    <!-- Confirm Password input -->
                     <div data-mdb-input-init class="form-outline mb-3">
-                        <input id="form3Example5" class="form-control form-control-md"
-                               placeholder="Nhập lại mật khẩu" />
+                        <input id="form3Example5" class="form-control form-control-md" type="password"
+                               placeholder="Nhập lại mật khẩu" oninput="checkPasswordMatch()" />
                         <label class="form-label" for="form3Example5">Nhập lại mật khẩu</label>
+                        <span id="passwordMatchMessage" class="text-danger"></span>
                     </div>
 
-                    <!-- Email inpur -->
+                    <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-3">
                         <span asp-validation-for="@Model.Email" class="text-danger"></span>
                         <input asp-for="@Model.Email" id="form3Example6" class="form-control form-control-md"
@@ -87,4 +90,61 @@
             </div>
         </div>
     </div>
-</section>
+</section> *@
+
+<div class="container-fluid position-relative bg-white d-flex p-0">
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+    <!-- Sign Up Start -->
+    <div class="container-fluid">
+        <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="index.html" class="">
+                            <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                        </a>
+                        <h3>Đăng ký</h3>
+                    </div>
+                    <form asp-action="DangKy" method="post">
+                        <div class="form-floating mb-3">
+                            <input asp-for="@Model.MaKh" class="form-control" id="floatingText" placeholder="abcxyz123">
+                            <label asp-for="@Model.MaKh" for="floatingText"></label>
+                            <span asp-validation-for="@Model.MaKh" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="@Model.HoTen" class="form-control" id="floatingInput" placeholder="Nguyen Van A">
+                            <label asp-for="@Model.HoTen" for="floatingInput"></label>
+                            <span asp-validation-for="@Model.HoTen" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="@Model.Email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label asp-for="@Model.Email" for="floatingInput"></label>
+                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input asp-for="@Model.MatKhau" type="password" class="form-control" id="floatingPassword" placeholder="Mật khẩu">
+                            <label asp-for="@Model.MatKhau" for="floatingPassword"></label>
+                            <span asp-validation-for="@Model.MatKhau" class="text-danger"></span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Ghi nhớ</label>
+                            </div>
+                            <a asp-controller="KhachHang" asp-action="ForgotPassword">Quên mật khẩu</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Đăng ký</button>
+                    </form>
+                    <p class="text-center mb-0">Đã có tài khoản? <a asp-controller="KhachHang" asp-action="DangNhap">Đăng nhập</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sign Up End -->
+</div>

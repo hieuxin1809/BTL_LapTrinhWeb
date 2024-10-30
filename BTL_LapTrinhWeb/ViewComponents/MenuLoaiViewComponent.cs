@@ -24,6 +24,7 @@ namespace BTL_LapTrinhWeb.ViewComponents
                 {
                     MaLoai = lo.MaLoai,
                     TenLoai = lo.TenLoai,
+                    Hinh = lo.Hinh,
                     SoLuong = lo.HangHoas.Count()
                 })
                 .OrderBy(x => x.TenLoai)
