@@ -33,7 +33,7 @@
                     @foreach(var item in Model)
                     {
                         <tr>
-                            <th scope="row">
+                            <th scope="row">    
                                 <div class="d-flex align-items-center">
                                     <img src="~/LayOutCustomer/Hinh/HangHoa/@item.Hinh" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="@item.TenHH">
                                 </div>
@@ -64,7 +64,7 @@
                                 </div>
                             </td>
                             <td>
-                                <p class="mb-0 mt-4">@item.ThanhTien $</p>
+                                <p class="mb-0 mt-4 total-price">@item.ThanhTien $</p>
                             </td>
                             <td>
                                 <a asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.maHH" class="btn btn-md rounded-circle bg-light border mt-4">
@@ -89,7 +89,7 @@
                 <div class="bg-light rounded">
                     <div class="p-4">
                         <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
-                        <div class="d-flex justify-content-between mb-4">
+                        <div class="d-flex justify-content-between mb-4 subtotal">
                             <h5 class="mb-0 me-4">Subtotal:</h5>
                             <p class="mb-0">$@Model.Sum(p => p.ThanhTien)</p>
                         </div>
@@ -101,7 +101,7 @@
                         </div>
                         <p class="mb-0 text-end">Shipping to Ukraine.</p>
                     </div>
-                    <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                    <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between total">
                         <h5 class="mb-0 ps-4 me-4">Total</h5>
                         <p class="mb-0 pe-4">$@Model.Sum(p => p.ThanhTien)</p>
                     </div>
@@ -112,4 +112,42 @@
     </div>
 </div>
 <!-- Cart Page End -->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Lắng nghe sự kiện nhấn nút "+" và "-"
+            $('.btn-plus, .btn-minus').click(function () {
+                // Lấy dòng cha của nút được nhấn
+                var $row = $(this).closest('tr');
+                // Lấy giá sản phẩm
+                var price = parseFloat($row.find('td:nth-child(3) p').text()); // Giá nằm ở cột thứ 3
+                // Lấy trường số lượng
+                var $quantityInput = $row.find('input[type="text"]');
+                var quantity = parseInt($quantityInput.val());
 
+                // Cập nhật giá trị số lượng
+                $quantityInput.val(quantity);
+                // Tính toán thành tiền
+                var totalPrice = price * quantity;
+                // Cập nhật thành tiền trong cột
+                $row.find('.total-price').text(totalPrice.toFixed(2) + ' $');
+                // Cập nhật subtotal trong giỏ hàng
+                updateCartTotal();
+            });
+
+            // Hàm cập nhật tổng giỏ hàng
+            function updateCartTotal() {
+                var subtotal = 0;
+                var total = 0
+                $('.total-price').each(function () {
+                    subtotal += parseFloat($(this).text());
+                    total += parseFloat($(this).text());
+                });
+                // Cập nhật subtotal và total
+                $('.subtotal').find('p').eq(0).text('$' + subtotal.toFixed(2));
+
+                $('.total').find('p').eq(0).text('$' + total.toFixed(2));
+            }
+        });
+    </script>
+}
