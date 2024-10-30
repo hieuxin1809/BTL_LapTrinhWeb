@@ -19,5 +19,15 @@
     <PackageReference Include="X.PagedList" Version="10.5.3" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="10.5.3" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Admin\Views\Goods\DanhMucSanPham.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>

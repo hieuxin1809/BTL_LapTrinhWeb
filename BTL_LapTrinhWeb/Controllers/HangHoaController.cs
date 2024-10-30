@@ -8,6 +8,8 @@ using System;
 using System.Drawing.Printing;
 using X.PagedList;
 using X.PagedList.Extensions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace BTL_LapTrinhWeb.Controllers
 {
@@ -136,10 +138,12 @@ namespace BTL_LapTrinhWeb.Controllers
         public IActionResult Search(string? query)
         {
             var hangHoas = db.HangHoas.AsQueryable();
-            if (query != null)
+
+            if (!string.IsNullOrWhiteSpace(query))
             {
                 hangHoas = hangHoas.Where(p => p.TenHh.Contains(query));
             }
+
             var result = hangHoas.Select(p => new HangHoaVM
             {
                 Mahh = p.MaHh,
@@ -148,11 +152,21 @@ namespace BTL_LapTrinhWeb.Controllers
                 Hinh = p.Hinh ?? "",
                 MoTaNgan = p.MoTaDonVi ?? "",
                 TenLoai = p.MaLoaiNavigation.TenLoai,
-                Rating = (int)p.Rating
-            });
+                Rating = (int)(p.Rating ?? 0)
+
+            }).ToList();
+
+            if (!result.Any())
+            {
+                TempData["Message"] = "không tìm thấy sản phẩm nào.";
+                return RedirectToAction("PageNotFound", "Home");
+            }
+
             return View(result);
         }
+
         public IActionResult SortProducts(int? loai, string sortOrder, string priceRange, string nameOrder, int page = 1, int pageSize = 9)
+
         {
             var hangHoas = db.HangHoas.AsQueryable();
 

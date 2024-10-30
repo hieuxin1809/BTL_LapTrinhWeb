@@ -4,94 +4,6 @@
     Layout = "_LayoutLoginRegister";
 }
 
-@* <section class="vh-100 d-flex align-items-center justify-content-center login_form">
-    <div class="container-fluid ">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-9 col-lg-6 col-xl-5">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                     class="img-fluid" alt="Sample image">
-            </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form asp-action="DangKy" method="post">
-                    <!-- Username input -->
-                    <div data-mdb-input-init class="form-outline mb-3">
-                        <span asp-validation-for="@Model.MaKh" class="text-danger"></span>
-                        <input asp-for="@Model.MaKh" id="form3Example3" class="form-control form-control-md"
-                               placeholder="Nhập tên đăng nhập" />
-                        <label asp-for="@Model.MaKh" class="form-label" for="form3Example3"></label>
-                    </div>
-
-                    <!-- Password input -->
-                    <div data-mdb-input-init class="form-outline mb-3">
-                        <span asp-validation-for="@Model.MatKhau" class="text-danger"></span>
-                        <input asp-for="@Model.MatKhau" id="form3Example4" class="form-control form-control-md"
-                               placeholder="Nhập mật khẩu" />
-                        <label asp-for="@Model.MatKhau" class="form-label" for="form3Example4"></label>
-                    </div>
-
-                    <!-- Confirm Password input -->
-                    <div data-mdb-input-init class="form-outline mb-3">
-                        <input id="form3Example5" class="form-control form-control-md" type="password"
-                               placeholder="Nhập lại mật khẩu" oninput="checkPasswordMatch()" />
-                        <label class="form-label" for="form3Example5">Nhập lại mật khẩu</label>
-                        <span id="passwordMatchMessage" class="text-danger"></span>
-                    </div>
-
-                    <!-- Email input -->
-                    <div data-mdb-input-init class="form-outline mb-3">
-                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
-                        <input asp-for="@Model.Email" id="form3Example6" class="form-control form-control-md"
-                               placeholder="Nhập email" />
-                        <label asp-for="@Model.Email" class="form-label" for="form3Example6"></label>
-                    </div>
-
-                    <!-- Name input -->
-                    <div data-mdb-input-init class="form-outline mb-3">
-                        <span asp-validation-for="@Model.HoTen" class="text-danger"></span>
-                        <input asp-for="@Model.HoTen" id="form3Example7" class="form-control form-control-md"
-                               placeholder="Nhập họ tên" />
-                        <label asp-for="@Model.HoTen" class="form-label" for="form3Example7"></label>
-                    </div>
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- Checkbox -->
-                        <div class="form-check mb-0">
-                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                            <label class="form-check-label" for="form2Example3">
-                                Ghi nhớ
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-md"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                            Đăng ký
-                        </button>
-                    </div>
-
-                    <div class="divider d-flex align-items-center my-4">
-                        <p class="text-center fw-bold mx-3 mb-0 divider">Or</p>
-                    </div>
-
-                    <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                        <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-floating mx-1">
-                            <i class="fab fa-facebook-f"></i>
-                        </button>
-                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-floating mx-1">
-                            <i class="fab fa-twitter"></i>
-                        </button>
-                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-floating mx-1">
-                            <i class="fab fa-linkedin-in"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section> *@
-
 <div class="container-fluid position-relative bg-white d-flex p-0">
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -106,8 +18,8 @@
             <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                 <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                     <div class="d-flex align-items-center justify-content-between mb-3">
-                        <a href="index.html" class="">
-                            <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                        <a asp-action="Index" asp-controller="Home" class="">
+                            <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>THSHOP</h3>
                         </a>
                         <h3>Đăng ký</h3>
                     </div>
@@ -131,6 +43,11 @@
                             <input asp-for="@Model.MatKhau" type="password" class="form-control" id="floatingPassword" placeholder="Mật khẩu">
                             <label asp-for="@Model.MatKhau" for="floatingPassword"></label>
                             <span asp-validation-for="@Model.MatKhau" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input asp-for="@Model.ConfirmPassword" type="password" class="form-control" id="floatingPassword" placeholder="Nhập lại mật khẩu">
+                            <label asp-for="@Model.ConfirmPassword" for="floatingPassword"></label>
+                            <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <div class="form-check">

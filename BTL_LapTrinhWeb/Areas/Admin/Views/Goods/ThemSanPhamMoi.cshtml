@@ -39,8 +39,8 @@
                 <span asp-validation-for="@Model.MoTaDonVi" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Hinh" class="control-label"></label>
-                <input asp-for="@Model.Hinh" class="form-control" />
+                <label asp-for="@Model.Hinh" class="control-label" for="Hinh"></label>
+                <input type="file" name="Hinh" class="form-control" />
                 <span asp-validation-for="@Model.Hinh" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -75,6 +75,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="DanhMucSanPham">Back to List</a>
 </div>
 

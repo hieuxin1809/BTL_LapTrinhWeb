@@ -1,0 +1,112 @@
+﻿@model IEnumerable<BTL_LapTrinhWeb.Data.HangHoa>
+
+@{
+    ViewData["Title"] = "DanhMucSanPham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Danh Mục Sản Phẩm</h6>
+            <p>
+                <a class="btn btn-success btn-sm" asp-action="ThemSanPhamMoi">Create New</a>
+            </p>
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-info">
+                    @TempData["Message"]
+                </div>
+            }
+        </div>
+        <div class="table-responsive">
+            <table class=" table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col">Mã Hàng Hóa</th>
+                        <th scope="col">Tên Hàng Hóa</th>
+                        <th scope="col">Mô Tả Đơn Vị</th>
+                        <th scope="col">Đơn Giá</th>
+                        <th scope="col">Ngày sản xuất</th>
+                        <th scope="col">Giảm Giá</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.MaHh)</td>
+                            <td>@Html.DisplayFor(modelItem => item.TenHh)</td>
+                            <td>@Html.DisplayFor(modelItem => item.MoTaDonVi)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DonGia)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NgaySx)</td>
+                            <td>@Html.DisplayFor(modelItem => item.GiamGia)</td>
+                            <td>
+                                <a asp-action="SuaSanPham" asp-route-Mahh="@item.MaHh" class="btn btn-primary btn-sm">Edit</a>
+                                <a asp-action="ChiTietSP" asp-route-Mahh="@item.MaHh" class="btn btn-info btn-sm">Details</a>
+                                <a asp-action="XoaSanPham" asp-route-Mahh="@item.MaHh" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="pagination d-flex justify-content-center mt-2">
+        <a href="@Url.Action("DanhMucSanPham", new { page = ViewBag.CurrentPage - 1 })" class="rounded"
+        @if (ViewBag.CurrentPage == 1)
+        {
+            <text> aria-hidden="true" class="disabled"</text>
+        }> &laquo;</a>
+
+        @{
+            int maxPagesToShow = 5;
+            int startPage = Math.Max(1, ViewBag.CurrentPage - 2);
+            int endPage = Math.Min(ViewBag.TotalPages, startPage + maxPagesToShow - 1);
+            if (startPage > 1)
+            {
+                <a href="@Url.Action("DanhMucSanPham", new { page = 1 })" class="rounded">1</a>
+                if (startPage > 2)
+                {
+                    <span class="mx-2">...</span>
+                }
+            }
+        }
+
+        @for (int z = startPage; z <= endPage; z++)
+        {
+            if (z == ViewBag.CurrentPage)
+            {
+                <a href="#" class="active rounded">@z</a>
+            }
+            else
+            {
+                <a href="@Url.Action("DanhMucSanPham", new { page = z })" class="rounded">@z</a>
+            }
+        }
+
+        @{
+            if (endPage < ViewBag.TotalPages)
+            {
+                if (endPage < ViewBag.TotalPages - 1)
+                {
+                    <span class="mx-2">...</span>
+                }
+                <a href="@Url.Action("DanhMucSanPham", new { page = ViewBag.TotalPages })" class="rounded">@ViewBag.TotalPages</a>
+            }
+        }
+
+        <a href="@Url.Action("DanhMucSanPham", new { page = ViewBag.CurrentPage + 1 })" class="rounded"
+        @if (ViewBag.CurrentPage == ViewBag.TotalPages)
+        {
+            <text> aria-hidden="true" class="disabled"</text>
+        }> &raquo;</a>
+    </div>
+</div>
