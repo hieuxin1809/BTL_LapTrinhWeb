@@ -20,6 +20,7 @@ namespace BTL_LapTrinhWeb.Areas.Admin.Controllers
         {
             db = _db;
         }
+        #region Index
         [Route("")]
         [Route("index")]
         public IActionResult Index()
@@ -47,6 +48,9 @@ namespace BTL_LapTrinhWeb.Areas.Admin.Controllers
             ViewBag.PageSize = pageSize;
             return View(lst);
         }
+        #endregion
+
+        #region Them san pham moi
         [Route("ThemSanPhamMoi")]
         [HttpGet]    
         public IActionResult ThemSanPhamMoi()
@@ -99,7 +103,10 @@ namespace BTL_LapTrinhWeb.Areas.Admin.Controllers
             ViewBag.MaLoai = new SelectList(db.Loais.ToList(), "MaLoai", "TenLoai");
             ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenCongTy");
             return View(hangHoaVM); // Trả về model đã nhập
-        }      
+        }
+        #endregion
+
+        #region SUa sam pham
         [Route("SuaSanPham")]
         [HttpGet]
         public IActionResult SuaSanPham(int Mahh)
@@ -168,6 +175,10 @@ namespace BTL_LapTrinhWeb.Areas.Admin.Controllers
             ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenCongTy", hangHoaVM.MaNcc);
             return View(hangHoaVM); // Trả về lại view với dữ liệu không hợp lệ
         }
+        #endregion Sua san pham
+
+
+        #region Xoa san pham
         [Route("XoaSanPham")]
         [HttpGet]
         public IActionResult XoaSanPham(int Mahh)
@@ -198,6 +209,8 @@ namespace BTL_LapTrinhWeb.Areas.Admin.Controllers
 
             return RedirectToAction("DanhMucSanPham", "HomeAdmin");
         }
+        #endregion
+
         [Route("ChiTietSP")]
         [HttpGet]
         public IActionResult ChiTietSP(int Mahh)

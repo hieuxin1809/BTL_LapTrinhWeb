@@ -38,16 +38,22 @@ namespace BTL_LapTrinhWeb.Controllers
                 try
                 {
                     var khachHang = _mapper.Map<KhachHang>(model);
-                    khachHang.RandomKey = MyUtil.GenerateRamdomKey();
-                    khachHang.MatKhau = model.MatKhau.ToMd5Hash(khachHang.RandomKey);
-                    khachHang.Hinh = "avatar.jpg";
-                    khachHang.HieuLuc = true;//sẽ xử lý khi dùng Mail để active
-                    khachHang.VaiTro = 0;
 
+                    if(model.MatKhau == model.ConfirmPassword)
+                    {
+						khachHang.RandomKey = MyUtil.GenerateRamdomKey();
+						khachHang.MatKhau = model.MatKhau.ToMd5Hash(khachHang.RandomKey);
+					} else
+                    {
+						ModelState.AddModelError("Loi", "Mật khẩu không khớp");
+					}
+					khachHang.Hinh = "avatar.jpg";
+					khachHang.HieuLuc = true;//sẽ xử lý khi dùng Mail để active
+					khachHang.VaiTro = 0;
 
-                    db.Add(khachHang);
+					db.Add(khachHang);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "HangHoa");
+                    return RedirectToAction("DangNhap", "KhachHang");
                 }
                 catch (Exception ex)
                 {
@@ -150,7 +156,6 @@ namespace BTL_LapTrinhWeb.Controllers
 
                 if (khachHang == null)
                 {
-                    //TempData["Message"] = $"Không tồn tại người dùng {model.Username}";
                     ModelState.AddModelError("Username", "Tên đăng nhập không tồn tại.");
                     return View(model);
                 }
