@@ -27,17 +27,13 @@ public partial class HangHoa
 
     public string? MoTa { get; set; }
 
-    public int? Rating { get; set; }
-
     public string MaNcc { get; set; } = null!;
 
-    public virtual ICollection<BanBe> BanBes { get; set; } = new List<BanBe>();
+    public int? Rating { get; set; }
 
     public virtual ICollection<ChiTietHd> ChiTietHds { get; set; } = new List<ChiTietHd>();
 
-    public virtual Loai? MaLoaiNavigation { get; set; } = null!;
+    public virtual Loai MaLoaiNavigation { get; set; } = null!;
 
-    public virtual NhaCungCap? MaNccNavigation { get; set; } = null!;
-
-    public virtual ICollection<YeuThich> YeuThiches { get; set; } = new List<YeuThich>();
+    public virtual NhaCungCap MaNccNavigation { get; set; } = null!;
 }
