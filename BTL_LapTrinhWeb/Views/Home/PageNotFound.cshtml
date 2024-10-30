@@ -4,14 +4,15 @@
 }
 
 <!-- Single Page Header start -->
-<div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">404 Error</h1>
-    <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li class="breadcrumb-item"><a asp-controller="HangHoa" asp-action="Index">Pages</a></li>
-        <li class="breadcrumb-item active text-white">404</li>
-    </ol>
-</div>
+@section BreadCum {
+    <div class="container-fluid py-5 " style="margin-top:120px; background-color: #f0f0f0;">
+        <h1 class="text-center text-black display-6">404</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-black">Trang chủ</a></li>
+            <li class="breadcrumb-item active text-black-50">404</li>
+        </ol>
+    </div>
+}
 <!-- Single Page Header End -->
 <!-- 404 Start -->
 <div class="container-fluid py-5">

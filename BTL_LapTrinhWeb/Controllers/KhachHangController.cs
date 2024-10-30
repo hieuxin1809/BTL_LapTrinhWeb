@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Security.Claims;
 
 namespace BTL_LapTrinhWeb.Controllers
@@ -17,7 +17,7 @@ namespace BTL_LapTrinhWeb.Controllers
         private readonly Hshop2023Context db;
         private readonly IMapper _mapper;
 
-        public KhachHangController(Hshop2023Context context,IMapper mapper)
+        public KhachHangController(Hshop2023Context context, IMapper mapper)
         {
             db = context;
             _mapper = mapper;
@@ -25,33 +25,34 @@ namespace BTL_LapTrinhWeb.Controllers
 
         #region Register
         [HttpGet]
-		public IActionResult DangKy()
-		{
-			return View();
-		}
+        public IActionResult DangKy()
+        {
+            return View();
+        }
 
-		[HttpPost]
-		public IActionResult DangKy(RegisterVM model)
-		{
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					var khachHang = _mapper.Map<KhachHang>(model);
-					khachHang.RandomKey = MyUtil.GenerateRamdomKey();
-					khachHang.MatKhau = model.MatKhau.ToMd5Hash(khachHang.RandomKey);
-					khachHang.HieuLuc = true;//sẽ xử lý khi dùng Mail để active
-					khachHang.VaiTro = 0;
+        [HttpPost]
+        public IActionResult DangKy(RegisterVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var khachHang = _mapper.Map<KhachHang>(model);
+                    khachHang.RandomKey = MyUtil.GenerateRamdomKey();
+                    khachHang.MatKhau = model.MatKhau.ToMd5Hash(khachHang.RandomKey);
+                    khachHang.Hinh = "avatar.jpg";
+                    khachHang.HieuLuc = true;//sẽ xử lý khi dùng Mail để active
+                    khachHang.VaiTro = 0;
 
 
-					db.Add(khachHang);
-					db.SaveChanges();
-					return RedirectToAction("Index", "HangHoa");
-				}
-				catch (Exception ex)
-				{
-					var mess = $"{ex.Message} shh";
-				}
+                    db.Add(khachHang);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "HangHoa");
+                }
+                catch (Exception ex)
+                {
+                    var mess = $"{ex.Message} shh";
+                }
             }
             else
             {
@@ -62,11 +63,11 @@ namespace BTL_LapTrinhWeb.Controllers
                 }
             }
             return View();
-		}
-		#endregion
+        }
+        #endregion
 
-		#region Loggin in
-		[HttpGet]
+        #region Loggin in
+        [HttpGet]
         public IActionResult DangNhap(string? ReturnURL)
         {
             ViewBag.ReturnURL = ReturnURL;
@@ -77,47 +78,54 @@ namespace BTL_LapTrinhWeb.Controllers
         public async Task<IActionResult> DangNhap(LoginVM model, string? ReturnURL)
         {
             ViewBag.ReturnURL = ReturnURL;
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var khachHang = db.KhachHangs.SingleOrDefault(kh => kh.MaKh == model.UserName);
-                if(khachHang == null)
+                if (khachHang == null)
                 {
                     ModelState.AddModelError("Loi", "Khong ton tai ten dang nhap nay");
                 }
                 else
                 {
-                    if(!khachHang.HieuLuc)
+                    if (!khachHang.HieuLuc)
                     {
                         ModelState.AddModelError("Loi", "Tai khoan da bi khoa, vui long lien he admin");
                     }
                     else
                     {
-                        if(khachHang.MatKhau != model.Password.ToMd5Hash(khachHang.RandomKey))
+                        if (khachHang.MatKhau != model.Password.ToMd5Hash(khachHang.RandomKey))
                         {
                             ModelState.AddModelError("Loi", "Thong tin dang nhap khong dung");
                         }
                         else
                         {
-                            //ghi nhan
-                            var claims = new List<Claim> {
+                            // Xác định vai trò người dùng
+                            var role = khachHang.VaiTro == 0 ? "Customer" : "Admin";
+
+                            // Tạo claims
+                            var claims = new List<Claim>
+                            {
                                 new Claim(ClaimTypes.Email, khachHang.Email),
                                 new Claim(ClaimTypes.Name, khachHang.HoTen),
                                 new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.MaKh),
-
-                                ///claim động
-                                new Claim(ClaimTypes.Role, "Customer"),
-                            }; 
+                                new Claim(ClaimTypes.Role, role)
+                            };
                             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
                             await HttpContext.SignInAsync(claimsPrincipal);
 
-                            if(Url.IsLocalUrl(ReturnURL))
+                            if (role == "Customer")
                             {
-                                return Redirect(ReturnURL);
-                            } else
-                            {
+                                if (Url.IsLocalUrl(ReturnURL))
+                                {
+                                    return Redirect(ReturnURL);
+                                }
                                 return Redirect("/");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "HomeAdmin", new { area = "admin" });
                             }
                         }
                     }
@@ -127,35 +135,40 @@ namespace BTL_LapTrinhWeb.Controllers
         }
         #endregion
 
-        [Authorize]
         [HttpGet]
-        public IActionResult Profile()
+        public IActionResult ForgotPassword()
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult Profile(ProfileVM model, IFormFile Hinh)
-        {
-            if(ModelState.IsValid)
-            {
-                try
-                {
-                    var khachHang = _mapper.Map<KhachHang>(model);
-                    if (Hinh != null)
-                    {
-                        khachHang.Hinh = MyUtil.UploadHinh(Hinh, "KhachHang");
-                    }
 
-                    db.Add(khachHang);
-                    db.SaveChanges();
-                    return RedirectToAction("Profile", "KhachHang");
-                }
-                catch (Exception ex) 
+        [HttpPost]
+        public IActionResult ForgotPassword(ForgotPasswordVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var khachHang = db.KhachHangs.SingleOrDefault(kh => kh.MaKh == model.Username);
+
+                if (khachHang == null)
                 {
-                    var message = $"Lỗi: {ex.Message}";
+                    //TempData["Message"] = $"Không tồn tại người dùng {model.Username}";
+                    ModelState.AddModelError("Username", "Tên đăng nhập không tồn tại.");
+                    return View(model);
                 }
+
+                if (khachHang.Email != model.Email)
+                {
+                    ModelState.AddModelError("Email", "Email không khớp với tên đăng nhập này.");
+                    return View(model);
+                }
+
+				khachHang.RandomKey = MyUtil.GenerateRamdomKey();
+				khachHang.MatKhau = model.NewPassword.ToMd5Hash(khachHang.RandomKey);
+                db.SaveChanges();
+                
+                return RedirectToAction("DangNhap", "KhachHang");
             }
-            return View();
+
+            return View(model);
         }
 
         [Authorize]

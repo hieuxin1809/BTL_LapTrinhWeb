@@ -1,0 +1,101 @@
+﻿
+@model IEnumerable<BTL_LapTrinhWeb.Data.HoaDon>
+
+@{
+    ViewData["Title"] = "DanhMucDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h3>Danh Mục Đơn Hàng</h3>
+@addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
+<p>
+    <a class="btn btn-success btn-sm" asp-action="ThemDonHang">Create New</a>
+</p>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Message"]
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Mã HD
+            </th>
+            <th>
+                Ngày Đặt
+            </th>           
+            <th>
+                Ngày Giao
+            </th>
+            <th>
+                 Tên KH
+            </th>
+            <th>
+                Địa Chỉ
+            </th>                                 
+            <th>
+                Ghi Chú
+            </th>            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaHd)
+             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDat)
+            </td>           
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayGiao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>                      
+            <td>
+                @Html.DisplayFor(modelItem => item.GhiChu)
+            </td>           
+            <td>
+                    <a asp-action="SuaDonHang" asp-route-Mahd="@item.MaHd" class="btn btn-primary btn-sm">Edit</a> 
+                    <a asp-action="ChiTietDonHang" asp-route-Mahd="@item.MaHd" class="btn btn-info btn-sm">Details</a> 
+                    <a asp-action="XoaDonHang" asp-route-Mahd="@item.MaHd" onclick="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này không?');" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="col-12">
+    <div class="pagination d-flex justify-content-center mt-5">
+        <a href="@Url.Action("DanhMucDonHang", new { page = ViewBag.CurrentPage - 1 })" class="rounded"
+        @if (ViewBag.CurrentPage == 1)
+        {
+            <text> aria-hidden="true" class="disabled"</text>
+        }> &laquo;</a>
+
+        @for (int z = 1; z <= ViewBag.TotalPages; z++)
+        {
+            if (z == ViewBag.CurrentPage)
+            {
+                <a href="#" class="active rounded">@z</a>
+            }
+            else
+            {
+                <a href="@Url.Action("DanhMucDonHang", new { page = z })" class="rounded">@z</a>
+            }
+        }
+
+        <a href="@Url.Action("DanhMucDonHang", new { page = ViewBag.CurrentPage + 1 })" class="rounded"
+        @if (ViewBag.CurrentPage == ViewBag.TotalPages)
+        {
+            <text> aria-hidden="true" class="disabled"</text>
+        }> &raquo;</a>
+    </div>
+</div>
+

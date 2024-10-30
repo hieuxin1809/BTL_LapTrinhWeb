@@ -1,0 +1,35 @@
+﻿@using System.Security.Claims
+@{
+    Layout = "_LayoutCustomer";
+}
+
+@section BreadCum {
+    <div class="container-fluid py-5 " style="margin-top:120px; background-color: #f0f0f0;">
+        <h1 class="text-center text-black display-6">Thông tin khách hàng</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-black">Trang chủ</a></li>
+            <li class="breadcrumb-item active text-black-50">Thông tin khách hàng</li>
+        </ol>
+    </div>
+}
+
+<div class="container">
+    <div class="container-fluid row g-4">
+        <div class="col-md-3">
+            <h5>THÔNG TIN KHÁCH HÀNG</h5>
+            @{
+                var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+                <p>Xin chào, @userName!</p>
+            }
+            <ul class="m-2" style="list-style-type: none;">
+                <li class="my-2"><a asp-action="Profile" asp-controller="Profile">Thông tin khách hàng</a></li>
+                <li class="my-2"><a asp-action="ListOrder" asp-controller="Profile">Danh sách đơn hàng</a></li>
+                <li class="my-2"><a asp-action="ChangePassword" asp-controller="Profile">Đổi mật khẩu</a></li>
+                <li class="my-2"><a asp-action="ChangeInfo" asp-controller="Profile">Chỉnh sửa thông tin</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            @RenderBody()
+        </div>
+    </div>
+</div>

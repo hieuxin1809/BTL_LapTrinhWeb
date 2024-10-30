@@ -1,0 +1,34 @@
+﻿@model BTL_LapTrinhWeb.ViewModels.ProfileVM
+@{
+	ViewData["Title"] = "Profile";
+	Layout = "_LayoutProfile";
+}
+
+<h5>THÔNG TIN KHÁCH HÀNG</h5>
+<div class="container mt-5">
+
+    <div class="mb-3">
+        <label class="form-label"><p class="form-control-plaintext">Họ Tên: @Model.HoTen</p></label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><p class="form-control-plaintext">Giới Tính: @(Model.GioiTinh ? "Nữ" : "Nam")</p></label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><p class="form-control-plaintext">Ngày Sinh: @(Model.NgaySinh.HasValue ? Model.NgaySinh.Value.ToString("dd/MM/yyyy") : "Chưa có")</p></label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><p class="form-control-plaintext">Địa Chỉ: @(string.IsNullOrEmpty(Model.DiaChi) ? "Chưa có" : Model.DiaChi)</p></label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><p class="form-control-plaintext">Điện Thoại: @(string.IsNullOrEmpty(Model.DienThoai) ? "Chưa có" : Model.DienThoai)</p></label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><p class="form-control-plaintext">Email: @Model.Email</p></label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">
+            Hình Ảnh: <img src="@Url.Content("~/LayOutCustomer/Hinh/KhachHang/" + Model.Hinh)" alt="Hình ảnh" class="img-thumbnail mt-2" style="max-width: 150px;" />
+        </label>
+
+    </div>
+</div>

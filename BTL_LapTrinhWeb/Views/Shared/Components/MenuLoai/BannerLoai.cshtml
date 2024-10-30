@@ -3,11 +3,11 @@
     <div class="owl-carousel vegetable-carousel justify-content-center">
         @foreach (var item in Model)
         {
-            <div class="product-card text-center">
+            <div class="product-card text-center" style="background-image: url('@Url.Content("~/LayOutCustomer/Hinh/Loai/" + item.Hinh)')">
                 <div class="py-4 content">
-                    <h5 style="color:white;">@item.TenLoai</h5>
-                    <a asp-controller="HangHoa" asp-action="Index" asp-route-loai="@item.MaLoai" class="btn border border-secondary rounded-pill px-3 text-primary">
-                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Xem ngay
+                    @* <h5 style="color: white; border: 2px solid white; padding: 5px;">@item.TenLoai</h5> *@
+                    <a asp-controller="HangHoa" asp-action="Index" asp-route-loai="@item.MaLoai" class="btn btn-light text-dark border border-dark custom-btn">
+                        @item.TenLoai
                     </a>
                 </div>
             </div>

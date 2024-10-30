@@ -9,7 +9,7 @@ namespace BTL_LapTrinhWeb.Helpers
 		{
 			try
 			{
-				var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Hinh", folder, Hinh.FileName);
+				var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "LayOutCustomer", "Hinh", folder, Hinh.FileName);
 				using (var myfile = new FileStream(fullPath, FileMode.CreateNew))
 				{
 					Hinh.CopyTo(myfile);

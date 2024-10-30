@@ -4,14 +4,15 @@
 }
 
 <!-- Single Page Header start -->
-<div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Cart</h1>
-    <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">Cart</li>
-    </ol>
-</div>
+@section BreadCum {
+    <div class="container-fluid py-5 " style="margin-top:120px; background-color: #f0f0f0;">
+        <h1 class="text-center text-black display-6">Giỏ hàng</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-black">Trang chủ</a></li>
+            <li class="breadcrumb-item active text-black-50">Giỏ hàng</li>
+        </ol>
+    </div>
+}
 <!-- Single Page Header End -->
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">
@@ -34,7 +35,7 @@
                         <tr>
                             <th scope="row">
                                 <div class="d-flex align-items-center">
-                                    <img src="~/Hinh/HangHoa/@item.Hinh" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="@item.TenHH">
+                                    <img src="~/LayOutCustomer/Hinh/HangHoa/@item.Hinh" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="@item.TenHH">
                                 </div>
                             </th>
                             <td>

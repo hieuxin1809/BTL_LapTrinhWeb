@@ -1,6 +1,27 @@
 ﻿<form name="searchForm" asp-action="Search" asp-controller="HangHoa">
     <div class="input-group w-100 mx-auto d-flex">
-        <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1" name="query">
-        <button><span id="searchButton" class="input-group-text p-3" onclick="searchForm.submit()"><i class="fa fa-search"></i></span></button>
+        <input type="search" class="form-control p-3" placeholder="Tìm Kiếm" aria-describedby="search-icon-1" name="query">
+        <button type="button" id="searchButton" class="btn btn-primary p-3 ms-2" onclick="searchForm.submit()">
+            <i class="fa fa-search"></i>
+        </button>
     </div>
-</form> 
+</form>
+
+<style>
+    /* Kiểu cho nút tìm kiếm */
+    #searchButton {
+        background-color: #ff9800; /* Màu chính của Bootstrap */
+        border: none; /* Bỏ viền mặc định */
+        border-radius: 0.5rem; /* Góc bo tròn */
+        transition: background-color 0.3s; /* Hiệu ứng chuyển tiếp khi di chuột */
+    }
+
+    #searchButton:hover {
+            background-color: #e68a00; /* Màu tối hơn khi di chuột */
+    }
+
+    /* Kiểu cho trường nhập liệu */
+    .form-control {
+        border-radius: 0.5rem; /* Góc bo tròn */
+    }
+</style>
