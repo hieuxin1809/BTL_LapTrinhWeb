@@ -30,11 +30,12 @@ public partial class HangHoa
     public string MaNcc { get; set; } = null!;
 
     public int? Rating { get; set; }
-    public virtual ICollection<DanhGia> DanhGia { get; set; } = new List<DanhGia>();
+
     public virtual ICollection<ChiTietHd> ChiTietHds { get; set; } = new List<ChiTietHd>();
+
+    public virtual ICollection<DanhGia> DanhGia { get; set; } = new List<DanhGia>();
 
     public virtual Loai MaLoaiNavigation { get; set; } = null!;
 
     public virtual NhaCungCap MaNccNavigation { get; set; } = null!;
-
 }
