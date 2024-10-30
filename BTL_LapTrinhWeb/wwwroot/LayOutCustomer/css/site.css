@@ -20,10 +20,10 @@ html {
 body {
   margin-bottom: 60px;
 }
-/*sua sua sua*/
+/*best saler*/
 
 .product-card {
-    background-image: url('img/fruite-item-1.jpg');
+/*    background-image: src('~/LayoutCustomer/Hinh/HangHoa/@item.Hinh');*/
     background-size: cover;
     background-position: center;
     position: relative;
@@ -157,3 +157,13 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+/* button */
+.custom-btn {
+    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển đổi */
+}
+
+    .custom-btn:hover {
+        background-color: #007bff; /* Màu nền khi hover */
+        color: white; /* Màu chữ khi hover */
+    }

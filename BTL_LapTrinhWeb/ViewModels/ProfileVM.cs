@@ -6,17 +6,17 @@ namespace BTL_LapTrinhWeb.ViewModels
     {
         [Key]
         [Display(Name = "Tên đăng nhập")]
-        [Required(ErrorMessage = "*")]
+        [Required(ErrorMessage = "Vui lòng nhập tên người dùng")]
         [MaxLength(20, ErrorMessage = "Tối đa 20 kí tự")]
         public string MaKh { get; set; }
 
         [Display(Name = "Mật khẩu")]
-        [Required(ErrorMessage = "*")]
+        [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [DataType(DataType.Password)]
         public string MatKhau { get; set; }
 
         [Display(Name = "Họ tên")]
-        [Required(ErrorMessage = "*")]
+        [Required(ErrorMessage = "Vui lòng nhập họ tên")]
         [MaxLength(50, ErrorMessage = "Tối đa 50 kí tự")]
         public string HoTen { get; set; }
 
