@@ -17,17 +17,37 @@
                         @await Html.PartialAsync("_TimKiemPanel")
                     </div>
                     <div class="col-6"></div>
-                    <div class="col-xl-3">
-                        <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
-                            <label for="fruits">Sắp Xếp</label>
-                            <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" onchange="sortProducts(this.value)">
-                                <option value="">Nothing</option>
+                    <div class="col-xl-12 d-flex justify-content-left">
+                        <div class="bg-light ps-3 py-3 rounded d-flex align-items-center me-3">
+                            <label for="prices" class="me-2">Sắp Xếp</label>
+                            <select id="prices" class="border-0 form-select-sm bg-light">
+                                <option value="">--Chọn--</option>
                                 <option value="price_asc">Giá từ Thấp đến Cao</option>
                                 <option value="price_desc">Giá từ Cao đến Thấp</option>
                             </select>
                         </div>
+
+                        <div class="bg-light ps-3 py-3 rounded d-flex align-items-center me-3">
+                            <label for="priceRanges" class="me-2">Danh mục</label>
+                            <select id="priceRanges" class="border-0 form-select-sm bg-light">
+                                <option value="">--Chọn Khoảng Giá--</option>
+                                <option value="under_50000">Dưới 50000</option>
+                                <option value="50000_100000">50000 - 100000</option>
+                                <option value="100000_500000">100000 - 500000</option>
+                                <option value="over_500000">Trên 500000</option>
+                            </select>
+                        </div>
+
+                        <div class="bg-light ps-3 py-3 rounded d-flex align-items-center">
+                            <label for="dictionary" class="me-2">Thương hiệu</label>
+                            <select id="dictionary" class="border-0 form-select-sm bg-light">
+                                <option value="">--Sắp Xếp Tên--</option>
+                                <option value="az">A - Z</option>
+                                <option value="za">Z - A</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+
                 <div class="row g-4">
                     <div class="col-lg-3">
                         <div class="row g-4">
@@ -47,26 +67,54 @@
 <!-- Fruits Shop End-->
 @section Scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#fruits').on('change', function () {
-                var sortOrder = $(this).val();
-                $.ajax({
-                    url: '@Url.Action("SortProducts", "HangHoa")',
-                    type: 'GET',
-                    data: {
-                        sortOrder: sortOrder,
-                        loai: '@ViewBag.Loai',
-                        page: '@ViewBag.CurrentPage'
-                    },
-                    success: function (result) {
-                        $('.row.g-4.justify-content-center').html(result);
-                    },
-                    error: function (xhr, status, error) {
-                        alert('Có lỗi xảy ra: ' + error);
-                    }
+        <script>
+            $(document).ready(function () {
+                // Function to load sorted/filtered data
+                function loadProducts(page = 1) {
+                    var sortOrder = $('#prices').val();
+                    var priceRange = $('#priceRanges').val();
+                    var nameOrder = $('#dictionary').val();
+
+                    $.ajax({
+                        url: '@Url.Action("SortProducts", "HangHoa")',
+                        type: 'GET',
+                        data: {
+                            sortOrder: sortOrder,
+                            priceRange: priceRange,
+                            nameOrder: nameOrder,
+                            loai: '@ViewBag.Loai',
+                            page: page
+                        },
+                        success: function (result) {
+                            // Update the product list section
+                            $('.row.g-4.justify-content-center').html(result);
+
+                            // Update pagination links to maintain sorting and filtering
+                            $('.pagination a').each(function () {
+                                var pageLink = $(this).attr('href');
+                                pageLink = pageLink + `&sortOrder=${sortOrder}&priceRange=${priceRange}&nameOrder=${nameOrder}`;
+                                $(this).attr('href', pageLink);
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            alert('Có lỗi xảy ra: ' + error);
+                        }
+                    });
+                }
+
+                // Trigger on dropdown change and on pagination link click
+                $('#prices, #priceRanges, #dictionary').on('change', function () {
+                    loadProducts();
+                });
+
+                // Trigger loadProducts with correct page number on pagination link click
+                $(document).on('click', '.pagination a', function (e) {
+                    e.preventDefault();
+                    var page = $(this).data('page'); // Set `data-page` attribute in pagination links if not done yet
+                    loadProducts(page);
                 });
             });
-        });
-    </script>
+
+        </script>
+
 }

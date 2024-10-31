@@ -4,19 +4,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BTL_LapTrinhWeb.Data;
 
-public partial class Hshop2023Context : DbContext
+public partial class TesthshopContext : DbContext
 {
-    public Hshop2023Context()
+    public TesthshopContext()
     {
     }
 
-    public Hshop2023Context(DbContextOptions<Hshop2023Context> options)
+    public TesthshopContext(DbContextOptions<TesthshopContext> options)
         : base(options)
     {
     }
 
     public virtual DbSet<ChiTietHd> ChiTietHds { get; set; }
-    public virtual DbSet<DanhGia> DanhGia { get; set; }
+
+    public virtual DbSet<DanhGium> DanhGia { get; set; }
+
     public virtual DbSet<HangHoa> HangHoas { get; set; }
 
     public virtual DbSet<HoaDon> HoaDons { get; set; }
@@ -35,7 +37,8 @@ public partial class Hshop2023Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-S1UPDHE\\SQLEXPRESS;Initial Catalog=HShop2023;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-S1UPDHE\\SQLEXPRESS;Initial Catalog=TESTHShop;Integrated Security=True;Trust Server Certificate=True");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ChiTietHd>(entity =>
@@ -60,9 +63,9 @@ public partial class Hshop2023Context : DbContext
                 .HasConstraintName("FK_OrderDetails_Products");
         });
 
-        modelBuilder.Entity<DanhGia>(entity =>
+        modelBuilder.Entity<DanhGium>(entity =>
         {
-            entity.HasKey(e => e.Stt).HasName("PK__DanhGia__CA1EB6903B89E45C");
+            entity.HasKey(e => e.Stt).HasName("PK__DanhGia__CA1EB690D7F73020");
 
             entity.Property(e => e.Stt).HasColumnName("STT");
             entity.Property(e => e.BinhLuan).HasMaxLength(500);
@@ -80,6 +83,7 @@ public partial class Hshop2023Context : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Product_Review");
         });
+
         modelBuilder.Entity<HangHoa>(entity =>
         {
             entity.HasKey(e => e.MaHh).HasName("PK_Products");

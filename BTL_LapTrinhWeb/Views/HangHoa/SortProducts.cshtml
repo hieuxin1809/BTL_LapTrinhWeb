@@ -3,24 +3,26 @@
 @{
     ViewData["Title"] = "SortProducts";
 }
-  @await Html.PartialAsync("ProductItem", Model)
+
+@await Html.PartialAsync("ProductItem", Model)
+
 <div class="col-12">
     <div class="pagination d-flex justify-content-center mt-5">
-        <a href="@Url.Action("Index", new { loai = ViewBag.Loai, sortOrder = ViewBag.SortOrder, page = ViewBag.CurrentPage - 1 })" class="rounded @(ViewBag.CurrentPage == 1 ? "disabled" : "")">&laquo;</a>
+        <a href="#" data-page="@ViewBag.CurrentPage - 1" class="rounded @(ViewBag.CurrentPage == 1 ? "disabled" : "")">&laquo;</a>
 
         @for (int i = 1; i <= ViewBag.TotalPages; i++)
         {
             if (i == ViewBag.CurrentPage)
             {
-                <a href="#" class="active rounded">@i</a>
+                <a href="#" class="active rounded" data-page="@i">@i</a>
             }
             else
             {
-                <a href="@Url.Action("Index", new { loai = ViewBag.Loai, sortOrder = ViewBag.SortOrder, page = i })" class="rounded">@i</a>
+                <a href="#" data-page="@i" class="rounded">@i</a>
             }
         }
 
-        <a href="@Url.Action("Index", new { loai = ViewBag.Loai, sortOrder = ViewBag.SortOrder, page = ViewBag.CurrentPage + 1 })" class="rounded @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">&raquo;</a>
+        <a href="#" data-page="@ViewBag.CurrentPage + 1" class="rounded @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">&raquo;</a>
     </div>
 
 </div>

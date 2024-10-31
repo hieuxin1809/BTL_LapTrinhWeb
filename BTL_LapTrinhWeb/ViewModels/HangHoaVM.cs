@@ -23,4 +23,5 @@
         public int SoLuongTon { get; set; }
         public int Rating { get; set; }
     }
+
 }

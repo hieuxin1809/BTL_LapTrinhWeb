@@ -1,8 +1,15 @@
-﻿using BTL_LapTrinhWeb.Data;
+using BTL_LapTrinhWeb.Data;
+using BTL_LapTrinhWeb.Helpers;
 using BTL_LapTrinhWeb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Drawing.Printing;
+using X.PagedList;
+using X.PagedList.Extensions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace BTL_LapTrinhWeb.Controllers
 {
@@ -13,16 +20,35 @@ namespace BTL_LapTrinhWeb.Controllers
         {
             db = context;
         }
-        public IActionResult Index(int? loai, string sortOrder, int page = 1, int pageSize = 9)
+        public IActionResult Index(int? loai, string sortOrder, string priceRange, string nameOrder, int page = 1, int pageSize = 9)
         {
             var hangHoas = db.HangHoas.AsQueryable();
-            // Lọc theo loại nếu có
+
+            // Apply filters and sorting based on parameters
             if (loai.HasValue)
             {
                 hangHoas = hangHoas.Where(p => p.MaLoai == loai.Value);
             }
 
-            // Sắp xếp theo giá nếu có yêu cầu
+            if (!string.IsNullOrEmpty(priceRange))
+            {
+                switch (priceRange)
+                {
+                    case "under_50000":
+                        hangHoas = hangHoas.Where(p => p.DonGia < 50000);
+                        break;
+                    case "50000_100000":
+                        hangHoas = hangHoas.Where(p => p.DonGia >= 50000 && p.DonGia <= 100000);
+                        break;
+                    case "100000_500000":
+                        hangHoas = hangHoas.Where(p => p.DonGia >= 100000 && p.DonGia <= 500000);
+                        break;
+                    case "over_500000":
+                        hangHoas = hangHoas.Where(p => p.DonGia > 500000);
+                        break;
+                }
+            }
+
             switch (sortOrder)
             {
                 case "price_asc":
@@ -31,14 +57,19 @@ namespace BTL_LapTrinhWeb.Controllers
                 case "price_desc":
                     hangHoas = hangHoas.OrderByDescending(p => p.DonGia);
                     break;
-                default:
+            }
+
+            switch (nameOrder)
+            {
+                case "az":
+                    hangHoas = hangHoas.OrderBy(p => p.TenHh);
+                    break;
+                case "za":
+                    hangHoas = hangHoas.OrderByDescending(p => p.TenHh);
                     break;
             }
 
-            // Tổng số mục
             int totalItems = hangHoas.Count();
-
-            // Lấy danh sách sản phẩm sau khi phân trang
             var result = hangHoas
                 .Select(p => new HangHoaVM
                 {
@@ -54,19 +85,22 @@ namespace BTL_LapTrinhWeb.Controllers
                 .Take(pageSize)
                 .ToList();
 
-            // Tổng số trang
             int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
 
-            // Truyền thông tin phân trang và sắp xếp sang view
+            // Pass parameters to the view to retain current filters and sorting
             ViewBag.Loai = loai;
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
             ViewBag.PageSize = pageSize;
-            ViewBag.SortOrder = sortOrder; // Giữ lại thứ tự sắp xếp hiện tại
+            ViewBag.SortOrder = sortOrder;
+            ViewBag.PriceRange = priceRange;
+            ViewBag.NameOrder = nameOrder;
 
             return View(result);
         }
-        public IActionResult Detail(int id)
+
+
+        public IActionResult Detail(int id, int pageNumber = 1, int pageSize = 5)
         {
             var data = db.HangHoas.Include(p => p.MaLoaiNavigation).SingleOrDefault(p => p.MaHh == id);
             if (data == null)
@@ -86,6 +120,18 @@ namespace BTL_LapTrinhWeb.Controllers
                 TenLoai = data.MaLoaiNavigation.TenLoai,
                 SoLuongTon = 10
             };
+
+            //Lay ra comments
+            var totalItems = db.DanhGia.Where(c => c.MaHh == id).ToList().Count;
+            var totalPages = (int)Math.Ceiling((double)(totalItems) / pageSize);
+            var comments = db.DanhGia
+                .Where(c => c.MaHh == id)
+                .OrderByDescending(c => c.Date)
+                .ToPagedList(pageNumber, pageSize); 
+
+            ViewData["Comments"] = comments;
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = totalPages;
             return View(result);
         }
 
@@ -119,17 +165,35 @@ namespace BTL_LapTrinhWeb.Controllers
             return View(result);
         }
 
-        public IActionResult SortProducts(int? loai, string sortOrder, int page = 1, int pageSize = 9)
+        public IActionResult SortProducts(int? loai, string sortOrder, string priceRange, string nameOrder, int page = 1, int pageSize = 9)
+
         {
             var hangHoas = db.HangHoas.AsQueryable();
 
-            // Lọc theo loại nếu có
+            // Filter by category (loai) if specified
             if (loai.HasValue)
             {
                 hangHoas = hangHoas.Where(p => p.MaLoai == loai.Value);
             }
 
-            // Sắp xếp theo giá
+            // Filter by price range
+            switch (priceRange)
+            {
+                case "under_50000":
+                    hangHoas = hangHoas.Where(p => p.DonGia < 50000);
+                    break;
+                case "50000_100000":
+                    hangHoas = hangHoas.Where(p => p.DonGia >= 50000 && p.DonGia <= 100000);
+                    break;
+                case "100000_500000":
+                    hangHoas = hangHoas.Where(p => p.DonGia >= 100000 && p.DonGia <= 500000);
+                    break;
+                case "over_500000":
+                    hangHoas = hangHoas.Where(p => p.DonGia > 500000);
+                    break;
+            }
+
+            // Sort by price
             switch (sortOrder)
             {
                 case "price_asc":
@@ -138,14 +202,20 @@ namespace BTL_LapTrinhWeb.Controllers
                 case "price_desc":
                     hangHoas = hangHoas.OrderByDescending(p => p.DonGia);
                     break;
-                default:
+            }
+
+            // Sort by name
+            switch (nameOrder)
+            {
+                case "az":
+                    hangHoas = hangHoas.OrderBy(p => p.TenHh);
+                    break;
+                case "za":
+                    hangHoas = hangHoas.OrderByDescending(p => p.TenHh);
                     break;
             }
 
-            // Tổng số sản phẩm
             int totalItems = hangHoas.Count();
-
-            // Lấy danh sách sản phẩm sau khi phân trang
             var result = hangHoas
                 .Select(p => new HangHoaVM
                 {
@@ -157,20 +227,55 @@ namespace BTL_LapTrinhWeb.Controllers
                     TenLoai = p.MaLoaiNavigation.TenLoai,
                     Rating = p.Rating ?? 0
                 })
-                .Skip((page - 1) * pageSize)  // Bỏ qua các sản phẩm trước đó
-                .Take(pageSize)  // Lấy số lượng sản phẩm theo kích thước trang
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToList();
 
-            // Tổng số trang
             int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
 
-            // Truyền dữ liệu phân trang và sắp xếp về view
             ViewBag.Loai = loai;
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
-            ViewBag.SortOrder = sortOrder; // Lưu thứ tự sắp xếp hiện tại
+            ViewBag.SortOrder = sortOrder;
 
             return PartialView("SortProducts", result);
         }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult PostComment(int MaHh, string BinhLuan, int Rating)
+        {
+            try
+            {
+                string maKh = User.FindFirst(MySetting.CLAIM_CUSTOMERID)?.Value;
+
+                if (maKh != null)
+                {
+                    var newComment = new DanhGia
+                    {
+                        MaKh = maKh,
+                        MaHh = MaHh,
+                        BinhLuan = BinhLuan,
+                        Rating = Rating,
+                        Date = DateTime.Now
+                    };
+                    db.DanhGia.Add(newComment);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return Unauthorized(); // Return an error if not logged in
+                }
+
+                return RedirectToAction("Detail", new { id = MaHh });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
