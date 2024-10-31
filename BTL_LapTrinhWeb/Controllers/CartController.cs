@@ -78,11 +78,37 @@ namespace BTL_LapTrinhWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var customerId = HttpContext.User.Claims.SingleOrDefault(p => p.Type == MySetting.CLAIM_CUSTOMERID).Value;
+                var customerId = HttpContext.User.Claims.SingleOrDefault(p => p.Type == MySetting.CLAIM_CUSTOMERID)?.Value;
                 var khachHang = new KhachHang();
+
                 if (model.GiongKhachHang)
                 {
                     khachHang = db.KhachHangs.SingleOrDefault(kh => kh.MaKh == customerId);
+					if (khachHang.DiaChi == null)
+					{
+						ModelState.AddModelError("DiaChi", "Bạn chưa cập nhật địa chỉ cho tài khoản.");
+					}
+					if (khachHang.DienThoai == null)
+					{
+						ModelState.AddModelError("DiaChi", "Bạn chưa cập nhật số điện thoại cho tài khoản.");
+					}
+				}
+                // Kiểm tra các trường cần thiết
+
+                if (string.IsNullOrWhiteSpace(model.DiaChi) && khachHang.DiaChi == null)
+                {
+                        ModelState.AddModelError("DiaChi", "Vui lòng nhập địa chỉ.");
+                }
+
+                if (string.IsNullOrWhiteSpace(model.DienThoai) && khachHang.DienThoai == null)
+                {
+                    ModelState.AddModelError("DienThoai", "Vui lòng nhập số điện thoại.");
+                }
+
+                // Kiểm tra nếu có lỗi trong ModelState
+                if (!ModelState.IsValid)
+                {
+                    return View(Cart);
                 }
 
                 var hoadon = new HoaDon
@@ -98,39 +124,42 @@ namespace BTL_LapTrinhWeb.Controllers
                     GhiChu = model.GhiChu
                 };
 
-                db.Database.BeginTransaction();
-                try
+                using (var transaction = db.Database.BeginTransaction())
                 {
-                    db.Database.CommitTransaction();
-                    db.Add(hoadon);
-                    db.SaveChanges();
-
-                    var cthds = new List<ChiTietHd>();
-                    foreach (var item in Cart)
+                    try
                     {
-                        cthds.Add(new ChiTietHd
+                        db.Add(hoadon);
+                        db.SaveChanges();
+
+                        var cthds = new List<ChiTietHd>();
+                        foreach (var item in Cart)
                         {
-                            MaHd = hoadon.MaHd,
-                            SoLuong = item.SoLuong,
-                            DonGia = item.DonGia,
-                            MaHh = item.maHH,
-                            GiamGia = 0
-                        });
+                            cthds.Add(new ChiTietHd
+                            {
+                                MaHd = hoadon.MaHd,
+                                SoLuong = item.SoLuong,
+                                DonGia = item.DonGia,
+                                MaHh = item.maHH,
+                                GiamGia = 0
+                            });
+                        }
+                        db.AddRange(cthds);
+                        db.SaveChanges();
+
+                        HttpContext.Session.Set<List<CartItem>>(MySetting.CART_KEY, new List<CartItem>());
+
+                        transaction.Commit(); // Commit the transaction after all operations are successful
+                        return View("Success");
                     }
-                    db.AddRange(cthds);
-                    db.SaveChanges();
-
-                    HttpContext.Session.Set<List<CartItem>>(MySetting.CART_KEY, new List<CartItem>());
-
-                    return View("Success");
-                }
-                catch
-                {
-                    db.Database.RollbackTransaction();
+                    catch
+                    {
+                        transaction.Rollback(); // Rollback if any exception occurs
+                    }
                 }
             }
 
             return View(Cart);
         }
+
     }
 }

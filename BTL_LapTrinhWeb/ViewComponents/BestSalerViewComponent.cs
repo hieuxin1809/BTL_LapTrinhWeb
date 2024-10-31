@@ -14,7 +14,7 @@ namespace BTL_LapTrinhWeb.ViewComponents
         {
             var data = await db.HangHoas.Select(lo => new BestSalerVM
             {
-                Mahh = lo.MaLoai,
+                Mahh = lo.MaHh,
                 Tenhh = lo.TenHh,
                 TenLoai = lo.MaLoaiNavigation.TenLoai,
                 Hinh = lo.Hinh,
