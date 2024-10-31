@@ -12,7 +12,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post" asp-action="ThemSanPhamMoi">
+        <form method="post" asp-action="ThemSanPhamMoi" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>           
             <div class="form-group">
                 <label asp-for="@Model.TenHh" class="control-label"></label>
@@ -39,9 +39,9 @@
                 <span asp-validation-for="@Model.MoTaDonVi" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Hinh" class="control-label" for="Hinh"></label>
+                <label class="control-label" for="Hinh">Hình</label>
                 <input type="file" name="Hinh" class="form-control" />
-                <span asp-validation-for="@Model.Hinh" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="@Model.NgaySx" class="control-label"></label>
