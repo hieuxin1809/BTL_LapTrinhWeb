@@ -79,7 +79,7 @@ namespace BTL_LapTrinhWeb.Areas.Admin.Controllers
                 };
                 if (Hinh != null)
                 {
-                    hangHoa.Hinh = MyUtil.UploadHinh(Hinh, "KhachHang");
+                    hangHoa.Hinh = MyUtil.UploadHinh(Hinh, "HangHoa");
                 }
 
                 db.HangHoas.Add(hangHoa);
@@ -157,7 +157,7 @@ namespace BTL_LapTrinhWeb.Areas.Admin.Controllers
                 hangHoa.DonGia = hangHoaVM.DonGia;
                 if (Hinh != null)
                 {
-                    hangHoa.Hinh = MyUtil.UploadHinh(Hinh, "KhachHang");
+                    hangHoa.Hinh = MyUtil.UploadHinh(Hinh, "HangHoa");
                 } else
                 {
                     hangHoa.Hinh = hangHoaVM.Hinh;
