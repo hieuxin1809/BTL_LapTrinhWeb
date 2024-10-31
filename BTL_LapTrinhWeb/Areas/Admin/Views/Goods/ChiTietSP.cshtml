@@ -6,69 +6,86 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Chi tiết sản phẩm</h1>
+<h1 class="text-primary mb-4">Chi Tiết Sản Phẩm</h1>
 
-<div>
-    <h4>Hàng hóa</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenHh)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenHh)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenAlias)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenAlias)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoTaDonVi)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoTaDonVi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DonGia)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DonGia)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Hinh)
-        </dt>
-        <dd class = "col-sm-10">
-            <img src="~/LayOutCustomer/Hinh/HangHoa/@Model.Hinh" alt="@Model.Hinh" style="height:200px;" />
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NgaySx)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NgaySx)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GiamGia)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GiamGia)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoLanXem)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SoLanXem)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoTa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoTa)
-        </dd>
-    </dl>
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h4 class="mb-0">Hàng Hóa</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3 text-secondary font-weight-bold">
+                @Html.DisplayNameFor(model => model.TenHh)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.TenHh)
+            </dd>
+
+            <dt class="col-sm-3 text-secondary font-weight-bold">
+                @Html.DisplayNameFor(model => model.TenAlias)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.TenAlias)
+            </dd>
+
+            <dt class="col-sm-3 text-secondary font-weight-bold">
+                @Html.DisplayNameFor(model => model.MoTaDonVi)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.MoTaDonVi)
+            </dd>
+
+            <dt class="col-sm-3 text-secondary font-weight-bold">
+                @Html.DisplayNameFor(model => model.DonGia)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.DonGia)
+            </dd>
+
+            <dt class="col-sm-3 text-secondary font-weight-bold">
+                @Html.DisplayNameFor(model => model.Hinh)
+            </dt>
+            <dd class="col-sm-9">
+                <img src="~/LayOutCustomer/Hinh/HangHoa/@Model.Hinh" alt="@Model.Hinh" class="img-fluid border rounded" style="height:200px;" />
+            </dd>
+
+            <dt class="col-sm-3 text-secondary font-weight-bold">
+                @Html.DisplayNameFor(model => model.NgaySx)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.NgaySx)
+            </dd>
+
+            <dt class="col-sm-3 text-secondary font-weight-bold">
+                @Html.DisplayNameFor(model => model.GiamGia)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.GiamGia)
+            </dd>
+
+            <dt class="col-sm-3 text-secondary font-weight-bold">
+                @Html.DisplayNameFor(model => model.SoLanXem)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.SoLanXem)
+            </dd>
+
+            <dt class="col-sm-3 text-secondary font-weight-bold">
+                @Html.DisplayNameFor(model => model.MoTa)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.MoTa)
+            </dd>
+        </dl>
+    </div>
 </div>
-<div>
-    <a asp-action="SuaSanPham" asp-route-Mahh="@Model.MaHh">Edit</a> |
-    <a asp-action="DanhMucSanPham">Back to List</a>
+
+<div class="mt-3">
+    <a asp-action="SuaSanPham" asp-route-Mahh="@Model.MaHh" class="btn btn-outline-primary m-2">
+        <i class="fas fa-edit me-1"></i> Edit
+    </a>
+    <a asp-action="DanhMucSanPham" class="btn btn-outline-primary m-2">
+        <i class="fas fa-arrow-left me-1"></i> Back to List
+    </a>
 </div>
+
