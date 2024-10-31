@@ -50,7 +50,7 @@ namespace BTL_LapTrinhWeb.ViewModels
         [DataType(DataType.Date)]
         [Display(Name = "Ngày đặt hàng")]
         public DateTime NgayDat { get; set; }
-        [Required(ErrorMessage = "Ngày Cần là bắt buộc")]
+        [Required(ErrorMessage = "Ngày cần là bắt buộc")]
 
         [DataType(DataType.Date)]
         [Display(Name = "Ngày cần giao")]

@@ -6,78 +6,87 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Sửa sản phẩm</h1>
+<h1 class="text-primary mb-4">Sửa Sản Phẩm</h1>
 
-<h4>Hàng hóa</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h4 class="mb-0">Hàng Hóa</h4>
+    </div>
+    <div class="card-body">
         <form method="post" asp-action="SuaSanPham" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-             <input type="hidden" asp-for="@Model.MaHh" /> 
-            <div class="form-group">
-                <label asp-for="@Model.TenHh" class="control-label"></label>
+            <input type="hidden" asp-for="@Model.MaHh" />
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.TenHh" class="form-label fw-bold">Tên Hàng Hóa</label>
                 <input asp-for="@Model.TenHh" class="form-control" />
                 <span asp-validation-for="@Model.TenHh" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="@Model.TenAlias" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.TenAlias" class="form-label fw-bold">Tên Alias</label>
                 <input asp-for="@Model.TenAlias" class="form-control" />
                 <span asp-validation-for="@Model.TenAlias" class="text-danger"></span>
             </div>
-             <div class="form-group">
-                <label asp-for="@Model.MaLoai" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.MaLoai" class="form-label fw-bold">Loại Hàng</label>
                 <select asp-for="@Model.MaLoai" class="form-control" asp-items="ViewBag.MaLoai"></select>
                 <span asp-validation-for="@Model.MaLoai" class="text-danger"></span>
-            </div> 
-            <div class="form-group">
-                <label asp-for="@Model.MoTaDonVi" class="control-label"></label>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.MoTaDonVi" class="form-label fw-bold">Mô Tả Đơn Vị</label>
                 <input asp-for="@Model.MoTaDonVi" class="form-control" />
                 <span asp-validation-for="@Model.MoTaDonVi" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="@Model.DonGia" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.DonGia" class="form-label fw-bold">Đơn Giá</label>
                 <input asp-for="@Model.DonGia" class="form-control" />
                 <span asp-validation-for="@Model.DonGia" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label class="control-label" for="Hinh">Hình</label>
+
+            <div class="form-group mb-3">
+                <label for="Hinh" class="form-label fw-bold">Hình Ảnh</label>
                 <input type="file" name="Hinh" class="form-control" />
             </div>
-            <div class="form-group">
-                <label asp-for="@Model.NgaySx" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.NgaySx" class="form-label fw-bold">Ngày Sản Xuất</label>
                 <input asp-for="@Model.NgaySx" class="form-control" />
                 <span asp-validation-for="@Model.NgaySx" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="@Model.GiamGia" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.GiamGia" class="form-label fw-bold">Giảm Giá</label>
                 <input asp-for="@Model.GiamGia" class="form-control" />
                 <span asp-validation-for="@Model.GiamGia" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="@Model.SoLanXem" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.SoLanXem" class="form-label fw-bold">Số Lần Xem</label>
                 <input asp-for="@Model.SoLanXem" class="form-control" />
                 <span asp-validation-for="@Model.SoLanXem" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="@Model.MoTa" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.MoTa" class="form-label fw-bold">Mô Tả</label>
                 <input asp-for="@Model.MoTa" class="form-control" />
                 <span asp-validation-for="@Model.MoTa" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="@Model.MaNcc" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.MaNcc" class="form-label fw-bold">Nhà Cung Cấp</label>
                 <select asp-for="@Model.MaNcc" class="form-control" asp-items="ViewBag.MaNcc"></select>
                 <span asp-validation-for="@Model.MaNcc" class="text-danger"></span>
             </div>
-            
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            <div class="form-group mt-4">
+                <input type="submit" value="Lưu" class="btn btn-outline-primary m-2" />
+                <a asp-action="DanhMucSanPham" class="btn">Quay lại</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="DanhMucSanPham">Back to List</a>
 </div>
 
