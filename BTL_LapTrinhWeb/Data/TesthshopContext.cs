@@ -17,7 +17,7 @@ public partial class TesthshopContext : DbContext
 
     public virtual DbSet<ChiTietHd> ChiTietHds { get; set; }
 
-    public virtual DbSet<DanhGium> DanhGia { get; set; }
+    public virtual DbSet<DanhGia> DanhGia { get; set; }
 
     public virtual DbSet<HangHoa> HangHoas { get; set; }
 
@@ -63,7 +63,7 @@ public partial class TesthshopContext : DbContext
                 .HasConstraintName("FK_OrderDetails_Products");
         });
 
-        modelBuilder.Entity<DanhGium>(entity =>
+        modelBuilder.Entity<DanhGia>(entity =>
         {
             entity.HasKey(e => e.Stt).HasName("PK__DanhGia__CA1EB690D7F73020");
 
