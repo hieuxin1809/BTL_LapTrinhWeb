@@ -23,6 +23,7 @@
                         </a>
                         <h3>Đăng ký</h3>
                     </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <form asp-action="DangKy" method="post">
                         <div class="form-floating mb-3">
                             <input asp-for="@Model.MaKh" class="form-control" id="floatingText" placeholder="abcxyz123">

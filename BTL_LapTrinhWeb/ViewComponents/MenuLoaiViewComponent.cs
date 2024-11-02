@@ -10,13 +10,6 @@ namespace BTL_LapTrinhWeb.ViewComponents
         private readonly Hshop2023Context db;
 
         public MenuLoaiViewComponent(Hshop2023Context context)=> db = context;
-        //public IViewComponentResult Invoke()
-        //{
-        //    var data = db.Loais.Select(lo => new MenuLoaiVM { 
-        //        MaLoai= lo.MaLoai , TenLoai = lo.TenLoai , SoLuong = lo.HangHoas.Count()
-        //    }).OrderBy(x=> x.TenLoai);
-        //    return View(data);
-        //}
         public async Task<IViewComponentResult> InvokeAsync(bool isDefaultView)
         {
             var data = await db.Loais

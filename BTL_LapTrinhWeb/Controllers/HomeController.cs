@@ -34,11 +34,5 @@ namespace BTL_LapTrinhWeb.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        //public IActionResult AccessDenied()
-        //{
-        //    TempData["ErrorMessage"] = "Bạn không có quyền truy cập vào trang này.";
-        //    return Redirect(Request.Headers["Referer"].ToString()); // Trả về trang trước đó
-        //}
-
     }
 }

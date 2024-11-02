@@ -90,18 +90,21 @@ namespace BTL_LapTrinhWeb.Controllers
                 if (khachHang == null)
                 {
                     ModelState.AddModelError("Loi", "Khong ton tai ten dang nhap nay");
+                    return View(model);
                 }
                 else
                 {
                     if (!khachHang.HieuLuc)
                     {
                         ModelState.AddModelError("Loi", "Tai khoan da bi khoa, vui long lien he admin");
+                        return View(model);
                     }
                     else
                     {
                         if (khachHang.MatKhau != model.Password.ToMd5Hash(khachHang.RandomKey))
                         {
                             ModelState.AddModelError("Loi", "Thong tin dang nhap khong dung");
+                            return View(model);
                         }
                         else
                         {
@@ -137,7 +140,7 @@ namespace BTL_LapTrinhWeb.Controllers
                     }
                 }
             }
-            return View();
+            return View(model);
         }
         #endregion
 

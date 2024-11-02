@@ -23,7 +23,8 @@
                         </a>
                         <h3>Đăng nhập</h3>
                     </div>
-                    <form asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnURL">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <form asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnURL" method="post">
                         <div class="form-floating mb-3">
                             <input asp-for="@Model.UserName" class="form-control" id="floatingInput" placeholder="abcxyz1234">
                             <label asp-for="@Model.UserName" for="floatingInput"></label>
